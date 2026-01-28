@@ -15,5 +15,8 @@ export default {
     '**/*.ts',
     '**/*.tsx',
     'node_modules/**',
+    '.oc/**',
+    'dist/**',
+    'public/**',
   ],
 };

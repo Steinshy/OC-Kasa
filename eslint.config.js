@@ -10,7 +10,14 @@ import unicornPlugin from 'eslint-plugin-unicorn';
 
 export default [
   {
-    ignores: ['dist', 'node_modules', 'build', '*.config.js'],
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      '*.config.js',
+      '.oc/**',
+      'public/**',
+    ],
   },
   js.configs.recommended,
   {

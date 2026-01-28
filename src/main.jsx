@@ -7,26 +7,31 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: 'about',
-        element: <About />,
-      },
-      {
-        path: 'contact',
-        element: <Contact />,
-      },
-    ],
-  },
-]);
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: 'about',
+          element: <About />,
+        },
+        {
+          path: 'contact',
+          element: <Contact />,
+        },
+      ],
+    },
+  ],
+  { basename }
+);
 
 createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
