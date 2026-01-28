@@ -1,0 +1,53 @@
+.home-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.home-page h1 {
+  color: #646cff;
+  margin-bottom: 1rem;
+}
+
+.home-page > p {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 2rem;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.home-content section {
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.home-content h2 {
+  margin-top: 0;
+  color: #646cff;
+}
+
+.home-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.home-content li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.home-content li:last-child {
+  border-bottom: none;
+}
+
+.home-content strong {
+  color: #646cff;
+  font-family: monospace;
+}
