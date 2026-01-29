@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { basePath } from './utils/config.jsx';
+import { basename } from './utils/config.jsx';
 import './index.css';
 import Layout from './components/Layout';
 import About from './pages/About';
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basePath }
+  { basename }
 );
 
 createRoot(document.getElementById('root')).render(

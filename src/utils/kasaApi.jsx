@@ -1,7 +1,7 @@
 import { getCached, setCached } from './cache';
-import { basePath } from './config.jsx';
+import { basename } from './config.jsx';
 
-const dataUrl = `${basePath}data/logements.json`;
+const dataUrl = `${basename}data/logements.json`;
 
 const fetchRentals = async () => {
   const cacheKey = 'rentals';
