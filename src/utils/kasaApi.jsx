@@ -1,7 +1,7 @@
 import { getCached, setCached } from './cache';
 import { basename } from './config.jsx';
 
-const dataUrl = `${basename}data/logements.json`;
+const dataUrl = `${basename === '/' ? '' : basename}/data/logements.json`;
 
 const fetchRentals = async () => {
   const cacheKey = 'rentals';
