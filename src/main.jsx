@@ -1,13 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import { basePath } from './utils/config.jsx';
 import './index.css';
 import Layout from './components/Layout';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
-
-const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 
 const router = createBrowserRouter(
   [
@@ -30,7 +28,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename }
+  { basePath }
 );
 
 createRoot(document.getElementById('root')).render(

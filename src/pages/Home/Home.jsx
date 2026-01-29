@@ -1,6 +1,15 @@
+import { useEffect } from 'react';
 import './Home.css';
+import { fetchRentals } from '../../utils/kasaApi.jsx';
 
 function Home() {
+  useEffect(() => {
+    const loadRentals = async () => {
+      const data = await fetchRentals();
+      console.log(data);
+    };
+    loadRentals();
+  }, []);
   return (
     <div className="home-page">
       <h1>Home Page</h1>
