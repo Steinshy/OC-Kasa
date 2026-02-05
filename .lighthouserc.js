@@ -1,10 +1,6 @@
-export default {
+module.exports = {
   ci: {
     collect: {
-      url: ['http://localhost:4173/'],
-      startServerCommand: 'npm run preview',
-      startServerReadyPattern: 'Local:',
-      startServerReadyTimeout: 30000,
       numberOfRuns: 3,
     },
     assert: {
