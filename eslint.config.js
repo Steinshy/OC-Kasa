@@ -16,6 +16,7 @@ export default [
       'node_modules',
       'build',
       '*.config.js',
+      '.lighthouserc.*',
       '.oc/**',
       'public/**',
     ],
