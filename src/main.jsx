@@ -5,7 +5,6 @@ import './index.css';
 
 import Layout from './components/Layout';
 import About from './pages/About';
-import Contact from './pages/Contact';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import RentalDetail from './pages/RentalDetail';
@@ -26,10 +25,6 @@ const router = createBrowserRouter(
         {
           path: 'about',
           element: <About />,
-        },
-        {
-          path: 'contact',
-          element: <Contact />,
         },
       ],
     },

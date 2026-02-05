@@ -1,21 +1,25 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Kasa - Location d'appartements entre particuliers",
+  "short_name": "Kasa",
+  "description": "Plateforme web de location d'appartements entre particuliers. Trouvez votre logement idéal avec des descriptions détaillées et des photos.",
   "icons": [
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#ff6060",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/"
 }
