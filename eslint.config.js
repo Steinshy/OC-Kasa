@@ -7,6 +7,7 @@ import importPlugin from 'eslint-plugin-import';
 import securityPlugin from 'eslint-plugin-security';
 import sonarjsPlugin from 'eslint-plugin-sonarjs';
 import unicornPlugin from 'eslint-plugin-unicorn';
+import htmlPlugin from 'eslint-plugin-html';
 
 export default [
   {
@@ -138,6 +139,12 @@ export default [
     },
     rules: {
       'no-unused-vars': 'off',
+    },
+  },
+  {
+    files: ['**/*.html'],
+    plugins: {
+      html: htmlPlugin,
     },
   },
   prettier,

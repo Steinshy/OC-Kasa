@@ -1,15 +1,9 @@
-import { useEffect } from 'react';
-import './Home.css';
-import { fetchRentals } from '../../utils/kasaApi.jsx';
+import './style.css';
+import { useLoaderData } from 'react-router';
 
-function Home() {
-  useEffect(() => {
-    const loadRentals = async () => {
-      const data = await fetchRentals();
-      console.log(data);
-    };
-    loadRentals();
-  }, []);
+const Home = () => {
+  const rentals = useLoaderData();
+  console.log(rentals);
   return (
     <div className="home-page">
       <h1>Home Page</h1>
@@ -39,6 +33,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

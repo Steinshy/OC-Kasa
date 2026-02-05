@@ -5,6 +5,8 @@ on:
     branches: [main, dev]
   pull_request:
     branches: [main, dev]
+  schedule:
+    - cron: '0 0 * * 0'
 
 jobs:
   lint-and-test:
@@ -18,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '25.6.0'
           cache: 'npm'
 
       - name: Install dependencies
@@ -45,3 +47,255 @@ jobs:
           name: dist
           path: dist
           retention-days: 1
+
+  security-scan:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '25.6.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+
+      - name: Generate security report
+        if: always()
+        run: |
+          echo "## Security Scan Report" >> $GITHUB_STEP_SUMMARY
+          echo "### Audit Results" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate --json > audit-results.json 2>&1 || true
+          if [ -s audit-results.json ]; then
+            echo "Security vulnerabilities found. Check the audit output above." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '25.6.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+
+      - name: Check for outdated packages
+        run: npm outdated || true
+
+      - name: Generate audit report
+        run: |
+          npm audit --json > audit-report.json || true
+          echo "## Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "### Vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate --json | jq -r '.metadata.vulnerabilities | to_entries[] | "- \(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+
+  bundle-size:
+    name: Analyze Bundle Size
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '25.6.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_BASE_PATH: '/'
+        run: npm run analyze
+
+      - name: Analyze bundle size
+        run: |
+          echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### JavaScript Bundles" >> $GITHUB_STEP_SUMMARY
+          find dist/assets -name "*.js" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY || echo "No JS files found" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### CSS Bundles" >> $GITHUB_STEP_SUMMARY
+          find dist/assets -name "*.css" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY || echo "No CSS files found" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Total Bundle Size" >> $GITHUB_STEP_SUMMARY
+          du -sh dist >> $GITHUB_STEP_SUMMARY || echo "Could not calculate total size" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload bundle stats
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bundle-stats
+          path: dist/stats.html
+          retention-days: 7
+
+      - name: Check bundle size limits
+        run: |
+          JS_LIMIT=512000
+          CSS_LIMIT=51200
+
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+
+          echo "JavaScript bundle size: ${JS_SIZE} KB (limit: ${JS_LIMIT} KB)"
+          echo "CSS bundle size: ${CSS_SIZE} KB (limit: ${CSS_LIMIT} KB)"
+
+          if [ "$JS_SIZE" -gt "$JS_LIMIT" ]; then
+            echo "::error::JavaScript bundle size (${JS_SIZE} KB) exceeds limit (${JS_LIMIT} KB)"
+            exit 1
+          fi
+
+          if [ "$CSS_SIZE" -gt "$CSS_LIMIT" ]; then
+            echo "::error::CSS bundle size (${CSS_SIZE} KB) exceeds limit (${CSS_LIMIT} KB)"
+            exit 1
+          fi
+
+          echo "✅ All bundles within size limits"
+
+  performance-budget:
+    name: Check Performance Budget
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '25.6.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_BASE_PATH: '/'
+        run: npm run build
+
+      - name: Check performance budget
+        run: |
+          echo "## Performance Budget Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          TOTAL_SIZE=$(du -sb dist 2>/dev/null | awk '{print int($1/1024)}' || echo "0")
+
+          JS_BUDGET=300
+          CSS_BUDGET=30
+          TOTAL_BUDGET=500
+
+          echo "### Bundle Sizes" >> $GITHUB_STEP_SUMMARY
+          echo "- JavaScript: ${JS_SIZE} KB (budget: ${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- CSS: ${CSS_SIZE} KB (budget: ${CSS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- Total: ${TOTAL_SIZE} KB (budget: ${TOTAL_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          FAILED=0
+
+          if [ "$JS_SIZE" -gt "$JS_BUDGET" ]; then
+            echo "::error::JavaScript bundle (${JS_SIZE} KB) exceeds budget (${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$CSS_SIZE" -gt "$CSS_BUDGET" ]; then
+            echo "::error::CSS bundle (${CSS_SIZE} KB) exceeds budget (${CSS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$TOTAL_SIZE" -gt "$TOTAL_BUDGET" ]; then
+            echo "::error::Total bundle size (${TOTAL_SIZE} KB) exceeds budget (${TOTAL_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$FAILED" -eq 0 ]; then
+            echo "✅ All bundles within performance budget" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Performance budget exceeded. Please optimize your bundles." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+  lighthouse:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '25.6.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_BASE_PATH: '/'
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: './.lighthouserc.js'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Format Lighthouse results
+        if: always()
+        run: |
+          echo "## Lighthouse Performance Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f ".lighthouseci/assertion-results.json" ]; then
+            echo "### Performance Scores" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the Lighthouse CI output above for detailed scores." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Core Web Vitals" >> $GITHUB_STEP_SUMMARY
+            echo "- **First Contentful Paint (FCP)**: Target < 2.0s" >> $GITHUB_STEP_SUMMARY
+            echo "- **Largest Contentful Paint (LCP)**: Target < 2.5s" >> $GITHUB_STEP_SUMMARY
+            echo "- **Cumulative Layout Shift (CLS)**: Target < 0.1" >> $GITHUB_STEP_SUMMARY
+            echo "- **Total Blocking Time (TBT)**: Target < 300ms" >> $GITHUB_STEP_SUMMARY
+            echo "- **Speed Index**: Target < 3.0s" >> $GITHUB_STEP_SUMMARY
+            echo "- **Time to Interactive (TTI)**: Target < 3.8s" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Lighthouse results not found. Check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          retention-days: 7

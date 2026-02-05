@@ -4,12 +4,57 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 10
     reviewers:
+      - 'steinshy'
+    assignees:
       - 'steinshy'
     labels:
       - 'dependencies'
       - 'automated'
     commit-message:
       prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
+    versioning-strategy: increase
+    groups:
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - 'react-router*'
+          - '@react-router/*'
+      eslint:
+        patterns:
+          - 'eslint*'
+          - '@eslint/*'
+          - 'eslint-*'
+      typescript:
+        patterns:
+          - 'typescript'
+          - '@types/*'
+      vite:
+        patterns:
+          - 'vite*'
+          - '@vitejs/*'
+      stylelint:
+        patterns:
+          - 'stylelint*'
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 5
+    labels:
+      - 'github-actions'
+      - 'automated'
+    commit-message:
+      prefix: 'ci'
       include: 'scope'

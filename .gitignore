@@ -27,6 +27,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist/stats.html
+.lighthouseci
 *.local
 
 # Environment variables

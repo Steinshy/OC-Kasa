@@ -1,11 +1,14 @@
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import { basename } from './utils/config.jsx';
+import { fetchRentals, fetchRentalById } from './utils/kasaApi.jsx';
 import './index.css';
 import Layout from './components/Layout';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
+import RentalDetail from './pages/RentalDetail';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
   [
@@ -15,6 +18,7 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
+          loader: async () => await fetchRentals(),
           element: <Home />,
         },
         {
@@ -26,6 +30,16 @@ const router = createBrowserRouter(
           element: <Contact />,
         },
       ],
+    },
+    {
+      path: '/rental/:id',
+      loader: async ({ params }) => await fetchRentalById(params.id),
+      element: <RentalDetail />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
     },
   ],
   { basename }

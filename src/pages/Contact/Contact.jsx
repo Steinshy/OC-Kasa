@@ -1,6 +1,6 @@
-import './Contact.css';
+import './style.css';
 
-function Contact() {
+const Contact = () => {
   return (
     <div className="contact-page">
       <h1>Contact Page</h1>
@@ -34,6 +34,6 @@ function Contact() {
       </div>
     </div>
   );
-}
+};
 
 export default Contact;

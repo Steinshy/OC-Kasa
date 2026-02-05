@@ -1,6 +1,6 @@
-import './About.css';
+import './style.css';
 
-function About() {
+const About = () => {
   return (
     <div className="about-page">
       <h1>About Page</h1>
@@ -26,6 +26,6 @@ function About() {
       </div>
     </div>
   );
-}
+};
 
 export default About;

@@ -1,4 +1,4 @@
-import './ExampleCard.css';
+import './style.css';
 
 function ExampleCard({ title, description, icon }) {
   return (

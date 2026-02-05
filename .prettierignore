@@ -8,6 +8,13 @@ public
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
-tsconfig.json
 .vite
 .cache
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+coverage
+dist-ssr
+*.local

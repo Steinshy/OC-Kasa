@@ -1,5 +1,5 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import './Layout.css';
+import { Link, NavLink, Outlet } from 'react-router';
+import './style.css';
 
 function Layout() {
   return (
@@ -17,6 +17,9 @@ function Layout() {
             </li>
             <li>
               <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/rental/c67ab8a7">Rental Detail</NavLink>
             </li>
             <li>
               <NavLink to="/contact">Contact</NavLink>
