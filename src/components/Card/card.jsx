@@ -1,12 +1,27 @@
 import './style.css';
+import { Link } from 'react-router';
 
-function Card({ title, description, icon }) {
+function Card({ rental }) {
+  const {
+    id,
+    title,
+    cover,
+    pictures,
+    description,
+    host,
+    rating,
+    location,
+    equipments,
+    tags,
+  } = rental;
+
   return (
-    <div className="card">
-      {icon && <div className="example-card-icon">{icon}</div>}
-      <h3 className="card-title">{title}</h3>
-      <p className="card-description">{description}</p>
-    </div>
+    <Link to={`/rental/${id}`} className="card-link">
+      <div className="card">
+        <img src={cover} alt={title} className="card-image" />
+        <h3 className="card-title">{title}</h3>
+      </div>
+    </Link>
   );
 }
 

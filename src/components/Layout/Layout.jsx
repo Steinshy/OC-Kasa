@@ -16,9 +16,6 @@ function Layout() {
             <li>
               <NavLink to="/about">About</NavLink>
             </li>
-            <li>
-              <NavLink to="/rental/c67ab8a7">Rental Detail</NavLink>
-            </li>
           </ul>
         </nav>
       </header>

@@ -26,17 +26,17 @@ const router = createBrowserRouter(
           path: 'about',
           element: <About />,
         },
+        {
+          path: '/rental/:id',
+          loader: async ({ params }) => await fetchRentalById(params.id),
+          element: <RentalDetail />,
+          errorElement: <NotFound />,
+        },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
       ],
-    },
-    {
-      path: '/rental/:id',
-      loader: async ({ params }) => await fetchRentalById(params.id),
-      element: <RentalDetail />,
-      errorElement: <NotFound />,
-    },
-    {
-      path: '*',
-      element: <NotFound />,
     },
   ],
   { basename }

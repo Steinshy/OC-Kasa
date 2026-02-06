@@ -5,15 +5,9 @@ const RentalDetail = () => {
   const rental = useLoaderData();
 
   return (
-    <div className="rental-detail">
-      <h1>{rental.title}</h1>
-      <p>{rental.description}</p>
-      <p>Location: {rental.location}</p>
-      <p>Rating: {rental.rating}</p>
-      <p>Host: {rental.host.name}</p>
-      <p>Rating: {rental.rating}</p>
-      <p>Equipments: {rental.equipments.join(', ')}</p>
-      <p>Tags: {rental.tags.join(', ')}</p>
+    <div className="rental-detail-page">
+      <h1 className="rental-title">{rental.title}</h1>
+      <p className="rental-message">{rental.description}</p>
     </div>
   );
 };
