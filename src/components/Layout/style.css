@@ -110,6 +110,7 @@
 }
 
 .footer-content p {
+  color: #ffffff;
   margin: 0;
 }
 
@@ -135,6 +136,7 @@
 .footer-logo:hover {
   opacity: 0.8;
 }
+
 /* Responsive design */
 @media (max-width: 768px) {
   .layout-header {

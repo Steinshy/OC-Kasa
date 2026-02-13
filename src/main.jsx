@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import About from './pages/About';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import RentalDetail from './pages/RentalDetail';
+import Rental from './pages/Rental';
 import { basename } from './utils/config.jsx';
 import { fetchRentals, fetchRentalById } from './utils/kasa-api.jsx';
 
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
         {
           path: '/rental/:id',
           loader: async ({ params }) => await fetchRentalById(params.id),
-          element: <RentalDetail />,
+          element: <Rental />,
           errorElement: <NotFound />,
         },
         {

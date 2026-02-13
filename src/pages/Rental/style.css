@@ -1,0 +1,56 @@
+.rental-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  min-height: calc(100vh - 200px);
+}
+
+.rental-hero {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.rental-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.rental-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+.rental-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ff6060;
+  margin-bottom: 1rem;
+  text-align: start;
+}
+
+.rental-message {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  text-align: start;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.rental-location {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: start;
+  margin-bottom: 1rem;
+}

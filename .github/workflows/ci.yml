@@ -12,7 +12,6 @@ jobs:
   lint-and-test:
     name: Lint, Format Check & Type Check
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -28,23 +27,23 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint || true
+        run: npm run lint
 
       - name: Check code formatting
         if: always()
-        run: npm run format:check || true
+        run: npm run format:check
 
       - name: Run Stylelint
         if: always()
-        run: npm run stylelint || true
+        run: npm run stylelint
 
       - name: Type check
         if: always()
-        run: npm run typecheck || true
+        run: npm run typecheck
 
       - name: Build project
         if: always()
-        run: npm run build || true
+        run: npm run build
 
       - name: Upload build artifacts
         if: always()
@@ -57,7 +56,6 @@ jobs:
   security-scan:
     name: Security Vulnerability Scan
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -74,14 +72,13 @@ jobs:
 
       - name: Run npm audit
         run: npm audit --audit-level=moderate
-        continue-on-error: true
 
       - name: Generate security report
         if: always()
         run: |
           echo "## Security Scan Report" >> $GITHUB_STEP_SUMMARY
           echo "### Audit Results" >> $GITHUB_STEP_SUMMARY
-          npm audit --audit-level=moderate --json > audit-results.json 2>&1 || true
+          npm audit --audit-level=moderate --json > audit-results.json 2>&1
           if [ -s audit-results.json ]; then
             echo "Security vulnerabilities found. Check the audit output above." >> $GITHUB_STEP_SUMMARY
           else
@@ -91,7 +88,6 @@ jobs:
   dependency-audit:
     name: Dependency Audit
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -107,16 +103,16 @@ jobs:
         run: npm ci
 
       - name: Run npm audit
-        run: npm audit --audit-level=moderate || true
+        run: npm audit --audit-level=moderate
 
       - name: Check for outdated packages
         if: always()
-        run: npm outdated || true
+        run: npm outdated
 
       - name: Generate audit report
         if: always()
         run: |
-          npm audit --json > audit-report.json || true
+          npm audit --json > audit-report.json
           echo "## Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
           echo "### Vulnerabilities" >> $GITHUB_STEP_SUMMARY
           npm audit --audit-level=moderate --json | jq -r '.metadata.vulnerabilities | to_entries[] | "- \(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
@@ -124,7 +120,6 @@ jobs:
   bundle-size:
     name: Analyze Bundle Size
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -142,7 +137,7 @@ jobs:
       - name: Build project
         env:
           VITE_BASE_PATH: '/'
-        run: npm run analyze || true
+        run: npm run analyze
 
       - name: Analyze bundle size
         if: always()
@@ -150,13 +145,13 @@ jobs:
           echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### JavaScript Bundles" >> $GITHUB_STEP_SUMMARY
-          find dist/assets -name "*.js" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY || echo "No JS files found" >> $GITHUB_STEP_SUMMARY
+          find dist/assets -name "*.js" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### CSS Bundles" >> $GITHUB_STEP_SUMMARY
-          find dist/assets -name "*.css" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY || echo "No CSS files found" >> $GITHUB_STEP_SUMMARY
+          find dist/assets -name "*.css" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Total Bundle Size" >> $GITHUB_STEP_SUMMARY
-          du -sh dist >> $GITHUB_STEP_SUMMARY || echo "Could not calculate total size" >> $GITHUB_STEP_SUMMARY
+          du -sh dist >> $GITHUB_STEP_SUMMARY
 
       - name: Upload bundle stats
         uses: actions/upload-artifact@v4
@@ -193,7 +188,6 @@ jobs:
   performance-budget:
     name: Check Performance Budget
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -211,7 +205,7 @@ jobs:
       - name: Build project
         env:
           VITE_BASE_PATH: '/'
-        run: npm run build || true
+        run: npm run build
 
       - name: Check performance budget
         if: always()
