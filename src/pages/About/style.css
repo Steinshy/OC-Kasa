@@ -1,8 +1,11 @@
-.about-page {  
+.about-page {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   padding: 2rem;
+  max-width: 1023px;
+  width: 100%;
+  box-sizing: border-box;
   background-color: #ffffff;
   min-height: calc(100vh - 200px);
 }
@@ -43,15 +46,53 @@
   text-align: center;
   z-index: 1;
 }
-  
+
+.about-collapses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.about-collapses .collapse {
+  margin-bottom: 2rem;
+}
+
 @media (max-width: 768px) {
+  .about-page {
+    padding: 1.5rem;
+  }
+
+  .about-hero {
+    height: 180px;
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+  }
+
   .about-hero h1 {
     font-size: 2.5rem;
+  }
+
+  .about-collapses .collapse {
+    margin-bottom: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
+  .about-page {
+    padding: 1rem;
+  }
+
+  .about-hero {
+    height: 150px;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
   .about-hero h1 {
     font-size: 2rem;
+  }
+
+  .about-collapses .collapse {
+    margin-bottom: 1rem;
   }
 }

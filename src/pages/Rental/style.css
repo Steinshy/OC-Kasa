@@ -8,18 +8,11 @@
 
 .rental-hero {
   width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 20px;
-  overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 
-.rental-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
-  overflow: hidden;
+.rental-hero .gallery {
+  border-radius: 25px;
 }
 
 .rental-content {

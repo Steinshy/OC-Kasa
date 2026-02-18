@@ -46,6 +46,31 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.error-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-fallback h2 {
+  color: #ff6060;
+  margin-bottom: 1rem;
+}
+
+.error-fallback p {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.error-fallback a {
+  color: #ff6060;
+  text-decoration: underline;
+}
+
 @media (prefers-color-scheme: white) {
   :root {
     color: #213547;
