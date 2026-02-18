@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet } from 'react-router';
 import './style.css';
 
-function Layout() {
+const Layout = ({ children }) => {
   return (
     <div className="layout">
       <header className="layout-header">
@@ -30,6 +30,6 @@ function Layout() {
       </footer>
     </div>
   );
-}
+};
 
 export default Layout;

@@ -1,0 +1,24 @@
+.rental-rating {
+  --star-filled: #ff6060;
+  --star-empty: #e3e3e3;
+  --star-size: 30px;
+  --star-gap: 6px;
+
+  display: flex;
+  align-items: center;
+  gap: var(--star-gap);
+}
+
+.rental-rating .star {
+  width: var(--star-size);
+  height: var(--star-size);
+  stroke: none;
+}
+
+.rental-rating .star.filled {
+  fill: var(--star-filled);
+}
+
+.rental-rating .star.empty {
+  fill: var(--star-empty);
+}

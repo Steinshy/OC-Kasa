@@ -42,13 +42,18 @@
 }
 
 .collapse-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease-out;
 }
 
 .collapse-body.open {
-  max-height: 800px;
+  grid-template-rows: 1fr;
+}
+
+.collapse-body-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .collapse-content {

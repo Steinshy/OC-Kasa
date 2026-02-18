@@ -13,18 +13,18 @@
 - [x] Add image counter display (e.g., "1/5")
 - [x] Hide controls when only 1 image
 - [x] Style with fixed height and image cropping
-- [ ] Add responsive design
+- [x] Add responsive design
 - [ ] Test with various image arrays
 
 ### 2. Interactive Collapse Component
 - [x] Refactor `src/components/Dropdown/Dropdown.jsx` to `Collapse.jsx`
-- [ ] Add `useState` for open/closed state
-- [ ] Implement click toggle functionality
-- [ ] Add CSS transitions/animations
-- [ ] Support both string and JSX children
-- [ ] Add keyboard accessibility (Enter/Space)
-- [ ] Add ARIA attributes (`aria-expanded`)
-- [ ] Default state: closed on page load
+- [x] Add `useState` for open/closed state
+- [x] Implement click toggle functionality
+- [x] Add CSS transitions/animations
+- [x] Support both string and JSX children
+- [x] Add keyboard accessibility (Enter/Space)
+- [x] Add ARIA attributes (`aria-expanded`)
+- [x] Default state: closed on page load
 
 ### 3. Enhanced Rental Detail Page
 - [ ] Integrate Gallery component (pictures array)

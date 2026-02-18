@@ -1,4 +1,13 @@
+/* Rental page – Kasa design system (CLAUDE.md):
+   Accent #ff6060, text #333, content max 1240px, spacing 2rem */
 .rental-page {
+  --rental-accent: #ff6060;
+  --rental-text: #333;
+  --rental-content-max: 1240px;
+  --rental-padding: 2rem;
+  --rental-gap: 1rem;
+  --rental-hero-gap: 1.5rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,11 +17,7 @@
 
 .rental-hero {
   width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-.rental-hero .gallery {
-  border-radius: 25px;
+  margin-bottom: var(--rental-hero-gap);
 }
 
 .rental-content {
@@ -20,22 +25,23 @@
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--rental-padding);
   width: 100%;
+  max-width: var(--rental-content-max);
 }
 
 .rental-title {
   font-size: 36px;
   font-weight: 700;
-  color: #ff6060;
-  margin-bottom: 1rem;
+  color: var(--rental-accent);
+  margin-bottom: var(--rental-gap);
   text-align: start;
 }
 
 .rental-message {
   font-size: 18px;
   font-weight: 500;
-  color: #333;
+  color: var(--rental-text);
   text-align: start;
   max-width: 600px;
   line-height: 1.6;
@@ -45,5 +51,16 @@
   font-size: 1rem;
   font-weight: 500;
   text-align: start;
-  margin-bottom: 1rem;
+  margin-bottom: var(--rental-gap);
+}
+
+.rental-tags-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rental-gap);
+  margin-bottom: var(--rental-gap);
+  width: 100%;
+  align-self: stretch;
 }

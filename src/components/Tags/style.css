@@ -1,21 +1,29 @@
+/* Tag design best practices (Material UI, Carbon, Polaris):
+   - Concise labels, adequate padding, rounded pill shape
+   - Good contrast (WCAG), consistent gap between tags */
 .rental-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .rental-tag {
-  background-color: #ff6060;
-  color: #ffffff;
-  padding: 0.25rem 1rem;
-  border-radius: 1rem;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-}
+  --tag-bg: #ff6060;
+  --tag-text: #ffffff;
+  --tag-padding-y: 0.35rem;
+  --tag-padding-x: 1rem;
 
-.rental-tag p {
-  margin: 0;
-  padding: 0;
-  color: #ffffff;
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  font-weight: 600;
+  padding: var(--tag-padding-y) var(--tag-padding-x);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  min-height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

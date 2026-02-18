@@ -1,11 +1,11 @@
-import './style.css';
 import { useLoaderData } from 'react-router';
 
-import Card from '../../components/Card/card';
+import Card from '@/components/Card/card';
 
+import './style.css';
 const Home = () => {
-  const rentals = useLoaderData();
-  const list = Array.isArray(rentals) ? rentals : [];
+  const rentalsData = useLoaderData();
+  const rentalsList = Array.isArray(rentalsData) ? rentalsData : [];
 
   return (
     <div className="home-page">
@@ -13,7 +13,7 @@ const Home = () => {
         <h1>Chez vous, partout et ailleurs</h1>
       </div>
       <div className="cards-container">
-        {list.map((rental, index) => (
+        {rentalsList.map((rental, index) => (
           <Card key={rental?.id ?? index} rental={rental} />
         ))}
       </div>

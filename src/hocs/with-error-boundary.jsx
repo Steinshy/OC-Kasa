@@ -9,15 +9,10 @@ const DefaultFallback = () => (
   </div>
 );
 
-/**
- * HOC that wraps a component with an error boundary.
- * Catches React errors in the component tree and displays a fallback UI.
- *
- * @param {React.ComponentType} WrappedComponent - The component to wrap
- * @param {React.ComponentType} [FallbackComponent] - Custom fallback UI (optional)
- * @returns {React.ComponentType} Component wrapped with error boundary
- */
-function withErrorBoundary(WrappedComponent, FallbackComponent = DefaultFallback) {
+const withErrorBoundary = (
+  WrappedComponent,
+  FallbackComponent = DefaultFallback
+) => {
   return class WithErrorBoundary extends Component {
     state = { hasError: false, error: null };
 
@@ -36,6 +31,6 @@ function withErrorBoundary(WrappedComponent, FallbackComponent = DefaultFallback
       return <WrappedComponent {...this.props} />;
     }
   };
-}
+};
 
 export default withErrorBoundary;

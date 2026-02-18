@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import './style.css';
 
-function Gallery({ pictures = [], total = 0 }) {
-  if (total === 0) return null;
+const Gallery = ({ pictures = [], total = 0 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const counterId = useId();
   const currentPicture = pictures[currentIndex];
-
+  if (total === 0) return 0;
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
@@ -33,6 +33,7 @@ function Gallery({ pictures = [], total = 0 }) {
       onKeyDown={handleKeyDown}
       role="group"
       aria-label="Galerie photo"
+      aria-describedby={total > 1 ? counterId : undefined}
     >
       <img
         src={currentPicture}
@@ -57,13 +58,13 @@ function Gallery({ pictures = [], total = 0 }) {
           >
             ›
           </button>
-          <div className="gallery-counter">
+          <div id={counterId} className="gallery-counter" aria-live="polite">
             {currentIndex + 1}/{total}
           </div>
         </>
       )}
     </div>
   );
-}
+};
 
 export default Gallery;

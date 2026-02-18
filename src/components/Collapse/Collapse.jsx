@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import './style.css';
 
-function Collapse({ title, content, defaultOpen = false }) {
+const Collapse = ({ title, content, defaultOpen = false }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const bodyId = useId();
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
@@ -16,34 +17,38 @@ function Collapse({ title, content, defaultOpen = false }) {
     }
   };
 
-  const displayContent = Array.isArray(content) ? (
-    <ul className="collapse-list">
-      {content.map((item, i) => (
-        <li key={i}>{item}</li>
-      ))}
-    </ul>
-  ) : (
-    <p className="collapse-content">{content ?? ''}</p>
-  );
-
   return (
-    <div className="collapse" onKeyDown={handleKeyDown}>
+    <div className="collapse">
       <div
+        id={`${bodyId}-trigger`}
         role="button"
         tabIndex={0}
         className="collapse-header"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
         aria-expanded={isOpen}
+        aria-controls={bodyId}
       >
         <h3 className="collapse-title">{title}</h3>
-        <span className={`collapse-chevron ${isOpen ? 'open' : ''}`}>▼</span>
+        <span
+          className={`collapse-chevron ${isOpen ? 'open' : ''}`}
+          aria-hidden
+        >
+          ▼
+        </span>
       </div>
-      <div className={`collapse-body ${isOpen ? 'open' : ''}`}>
-        {displayContent}
+      <div
+        id={bodyId}
+        className={`collapse-body ${isOpen ? 'open' : ''}`}
+        role="region"
+        aria-labelledby={`${bodyId}-trigger`}
+      >
+        <div className="collapse-body-inner">
+          <p className="collapse-content">{content ?? ''}</p>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Collapse;
