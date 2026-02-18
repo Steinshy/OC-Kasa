@@ -27,6 +27,21 @@ export default defineConfig(({ mode }) => ({
         orientation: 'portrait',
         start_url: '/',
         scope: '/',
+        categories: ['business', 'productivity'],
+        screenshots: [
+          {
+            src: '/web-app-manifest-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            form_factor: 'narrow',
+          },
+          {
+            src: '/web-app-manifest-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            form_factor: 'wide',
+          },
+        ],
         icons: [
           {
             src: '/favicon-96x96.png',

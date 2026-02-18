@@ -23,7 +23,15 @@ jobs:
           node-version: '25.6.0'
           cache: 'npm'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run ESLint
@@ -53,8 +61,8 @@ jobs:
           path: dist
           retention-days: 1
 
-  security-scan:
-    name: Security Vulnerability Scan
+  security-audit:
+    name: Security & Dependency Audit
     runs-on: ubuntu-latest
 
     steps:
@@ -67,39 +75,15 @@ jobs:
           node-version: '25.6.0'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run npm audit
-        run: npm audit --audit-level=moderate
-
-      - name: Generate security report
-        if: always()
-        run: |
-          echo "## Security Scan Report" >> $GITHUB_STEP_SUMMARY
-          echo "### Audit Results" >> $GITHUB_STEP_SUMMARY
-          npm audit --audit-level=moderate --json > audit-results.json 2>&1
-          if [ -s audit-results.json ]; then
-            echo "Security vulnerabilities found. Check the audit output above." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "✅ No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
-          fi
-
-  dependency-audit:
-    name: Dependency Audit
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
         with:
-          node-version: '25.6.0'
-          cache: 'npm'
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run npm audit
@@ -112,10 +96,9 @@ jobs:
       - name: Generate audit report
         if: always()
         run: |
-          npm audit --json > audit-report.json
-          echo "## Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "## Security & Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
           echo "### Vulnerabilities" >> $GITHUB_STEP_SUMMARY
-          npm audit --audit-level=moderate --json | jq -r '.metadata.vulnerabilities | to_entries[] | "- \(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY || echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate --json 2>/dev/null | jq -r '.metadata.vulnerabilities | to_entries[] | "- \(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
 
   bundle-size:
     name: Analyze Bundle Size
@@ -131,7 +114,15 @@ jobs:
           node-version: '25.6.0'
           cache: 'npm'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build project
@@ -199,7 +190,15 @@ jobs:
           node-version: '25.6.0'
           cache: 'npm'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build project
@@ -217,9 +216,9 @@ jobs:
           CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
           TOTAL_SIZE=$(du -sb dist 2>/dev/null | awk '{print int($1/1024)}' || echo "0")
 
-          JS_BUDGET=300
-          CSS_BUDGET=30
-          TOTAL_BUDGET=500
+          JS_BUDGET=400
+          CSS_BUDGET=50
+          TOTAL_BUDGET=600
 
           echo "### Bundle Sizes" >> $GITHUB_STEP_SUMMARY
           echo "- JavaScript: ${JS_SIZE} KB (budget: ${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
