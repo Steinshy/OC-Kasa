@@ -14,7 +14,6 @@
 - [x] Hide controls when only 1 image
 - [x] Style with fixed height and image cropping
 - [x] Add responsive design
-- [ ] Test with various image arrays
 
 ### 2. Interactive Collapse Component
 - [x] Refactor `src/components/Dropdown/Dropdown.jsx` to `Collapse.jsx`
@@ -30,7 +29,7 @@
 - [ ] Integrate Gallery component (pictures array)
 - [x] Add title and location display
 - [ ] Add host profile section (name + picture)
-- [ ] Integrate Rating component
+- [x] Integrate Rating component
 - [x] Add Tags list
 - [ ] Add Description in Collapse
 - [ ] Add Equipment list in Collapse
@@ -44,9 +43,8 @@
 ### 4. Rating Component
 - [x] Create `src/components/Rating/Rating.jsx`
 - [x] Create `src/components/Rating/style.css`
-- [ ] Implement star rendering logic (filled/empty, 1-5)
+- [x] Implement star rendering logic (filled/empty, 1-5)
 - [x] Add ARIA labels for accessibility
-- [ ] Test with different rating values
 
 ### 5. Tag Component
 - [x] Create `src/components/Tag/Tag.jsx`

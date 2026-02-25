@@ -1,9 +1,14 @@
-import './style.css';
 import { Link } from 'react-router';
 
-const Card = ({ rental }) => {
-  if (!rental || typeof rental !== 'object') return null;
+import type { Rental } from '@/types/rental';
 
+import './style.css';
+
+interface CardProps {
+  rental: Rental;
+}
+
+const Card = ({ rental }: CardProps) => {
   const { id, title, cover } = rental;
   if (!id) return null;
 
@@ -11,11 +16,11 @@ const Card = ({ rental }) => {
     <Link to={`/rental/${id}`}>
       <div className="card">
         <img
-          src={cover || ''}
+          src={cover}
           alt={title || 'Logement'}
           className="card-image"
         />
-        <h3 className="card-title">{title ?? ''}</h3>
+        <h3 className="card-title">{title}</h3>
       </div>
     </Link>
   );

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import checker from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -7,6 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
+    checker({ typescript: true }),
     tsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
@@ -15,60 +17,8 @@ export default defineConfig(({ mode }) => ({
         'favicon.svg',
         'favicon-96x96.png',
         'apple-touch-icon.png',
+        'site.webmanifest',
       ],
-      manifest: {
-        name: "Kasa - Location d'appartements entre particuliers",
-        short_name: 'Kasa',
-        description:
-          "Plateforme web de location d'appartements entre particuliers. Trouvez votre logement idéal avec des descriptions détaillées et des photos.",
-        theme_color: '#ff6060',
-        background_color: '#ffffff',
-        display: 'standalone',
-        orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
-        categories: ['business', 'productivity'],
-        screenshots: [
-          {
-            src: '/web-app-manifest-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            form_factor: 'narrow',
-          },
-          {
-            src: '/web-app-manifest-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            form_factor: 'wide',
-          },
-        ],
-        icons: [
-          {
-            src: '/favicon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/web-app-manifest-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-          {
-            src: '/web-app-manifest-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-          {
-            src: '/apple-touch-icon.png',
-            sizes: '180x180',
-            type: 'image/png',
-            purpose: 'any',
-          },
-        ],
-      },
       workbox: {
         globPatterns: [
           '**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}',

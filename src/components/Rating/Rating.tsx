@@ -1,10 +1,11 @@
 import { Star } from 'lucide-react';
+
 import './style.css';
 
-const Rating = ({ rating = 0, ratingValue = 0 }) => {
+const Rating = ({ ratingValue = 0, locationRatingMax = 5 }) => {
   return (
-    <div className="rental-rating" aria-label={`Note : ${ratingValue} sur 5`}>
-      {[...Array(5)].map((_, index) => (
+    <div className="rental-rating" aria-label={`Note : ${ratingValue} sur ${locationRatingMax}`}>
+      {Array.from({ length: locationRatingMax }, (_, index) => (
         <Star
           key={index}
           size={30}

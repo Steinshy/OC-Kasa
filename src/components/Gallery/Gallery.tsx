@@ -1,30 +1,16 @@
-import { useId, useState } from 'react';
+import useGalleryNavigation from '@/hooks/use-gallery-navigation';
 import './style.css';
 
-const Gallery = ({ pictures = [], total = 0 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const counterId = useId();
+interface GalleryProps {
+  pictures?: string[];
+  total?: number;
+}
+
+const Gallery = ({ pictures = [], total = 0 }: GalleryProps) => {
+  const { currentIndex, goToPrevious, goToNext, handleKeyDown } = useGalleryNavigation(total);
   const currentPicture = pictures[currentIndex];
-  if (total === 0) return 0;
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
-  };
-
-  const handleKeyDown = (e) => {
-    total === 0
-      ? null
-      : e.key === 'ArrowLeft'
-        ? (e.preventDefault(), goToPrevious())
-        : e.key === 'ArrowRight'
-          ? (e.preventDefault(), goToNext())
-          : e.key === 'Escape'
-            ? (e.preventDefault(), setCurrentIndex(0))
-            : null;
-  };
+  const counterId = 'gallery-counter';
+  if (total === 0) return null;
 
   return (
     <div

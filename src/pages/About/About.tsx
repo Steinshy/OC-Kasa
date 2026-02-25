@@ -1,7 +1,13 @@
 import Collapse from '@/components/Collapse';
+
 import './style.css';
 
-const ABOUT_SECTIONS = [
+interface AboutSection {
+  title: string;
+  content: string;
+}
+
+const ABOUT_SECTIONS: AboutSection[] = [
   {
     title: 'Fiabilité',
     content:

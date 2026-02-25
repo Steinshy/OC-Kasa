@@ -8,6 +8,7 @@ import securityPlugin from 'eslint-plugin-security';
 import sonarjsPlugin from 'eslint-plugin-sonarjs';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import htmlPlugin from 'eslint-plugin-html';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
@@ -23,7 +24,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: ['**/*.js'],
+    files: ['**/*.{js,ts}'],
     plugins: {
       import: importPlugin,
       security: securityPlugin,
@@ -67,7 +68,35 @@ export default [
         'error',
         {
           case: 'kebabCase',
-          ignore: [/^[A-Z]/, /\.config\.js$/],
+          ignore: [/^[A-Z]/, /\.config\.(js|ts)$/],
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tseslint.parser,
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint.plugin,
+    },
+    rules: {
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
         },
       ],
     },
@@ -125,21 +154,6 @@ export default [
           ignore: [/^[A-Z]/, /\.config\.(js|ts)$/],
         },
       ],
-    },
-  },
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-    },
-    rules: {
-      'no-unused-vars': 'off',
     },
   },
   {

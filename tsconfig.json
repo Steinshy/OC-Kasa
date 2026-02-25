@@ -25,11 +25,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-
-    /* Allow JavaScript files */
-    "allowJs": true,
-    "checkJs": false
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

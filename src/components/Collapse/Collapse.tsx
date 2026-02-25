@@ -1,21 +1,19 @@
-import { useId, useState } from 'react';
+import useCollapseNavigation from '@/hooks/use-collapse-navigation';
+
 import './style.css';
 
-const Collapse = ({ title, content, defaultOpen = false }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  const bodyId = useId();
+interface CollapseProps {
+  title: string;
+  content: string;
+  defaultOpen?: boolean;
+}
 
+const Collapse = ({ title, content, defaultOpen = false }: CollapseProps) => {
+  if (!title || !content) return null;
+
+  const { isOpen, setIsOpen, handleKeyDown } = useCollapseNavigation(defaultOpen);
+  const bodyId = 'collapse-body';
   const handleToggle = () => setIsOpen((prev) => !prev);
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleToggle();
-    } else if (e.key === 'Escape' && isOpen) {
-      e.preventDefault();
-      setIsOpen(false);
-    }
-  };
 
   return (
     <div className="collapse">
@@ -32,10 +30,8 @@ const Collapse = ({ title, content, defaultOpen = false }) => {
         <h3 className="collapse-title">{title}</h3>
         <span
           className={`collapse-chevron ${isOpen ? 'open' : ''}`}
-          aria-hidden
-        >
-          ▼
-        </span>
+          aria-hidden="true"
+        />
       </div>
       <div
         id={bodyId}
@@ -44,7 +40,7 @@ const Collapse = ({ title, content, defaultOpen = false }) => {
         aria-labelledby={`${bodyId}-trigger`}
       >
         <div className="collapse-body-inner">
-          <p className="collapse-content">{content ?? ''}</p>
+          <p className="collapse-content">{content}</p>
         </div>
       </div>
     </div>

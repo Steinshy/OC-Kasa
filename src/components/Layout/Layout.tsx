@@ -1,7 +1,8 @@
 import { Link, NavLink, Outlet } from 'react-router';
+
 import './style.css';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div className="layout">
       <header className="layout-header">

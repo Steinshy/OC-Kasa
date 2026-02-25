@@ -1,0 +1,26 @@
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loader-spinner {
+  --spinner-size: 48px;
+  --spinner-color: #ff6060;
+  --spinner-track: #e3e3e3;
+  --spinner-thickness: 4px;
+
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: var(--spinner-thickness) solid var(--spinner-track);
+  border-top-color: var(--spinner-color);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
