@@ -1,4 +1,4 @@
-.rental-rating {
+.rating {
   --star-filled: #ff6060;
   --star-empty: #e3e3e3;
   --star-size: 30px;
@@ -9,16 +9,16 @@
   gap: var(--star-gap);
 }
 
-.rental-rating .star {
+.rating .star {
   width: var(--star-size);
   height: var(--star-size);
   stroke: none;
 }
 
-.rental-rating .star.filled {
+.rating .star.filled {
   fill: var(--star-filled);
 }
 
-.rental-rating .star.empty {
+.rating .star.empty {
   fill: var(--star-empty);
 }

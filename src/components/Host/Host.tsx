@@ -8,14 +8,19 @@ interface HostProps {
 
 const Host = ({ host }: HostProps) => {
   const { name, picture } = host;
+
+  if (!name && !picture) return null;
+
   return (
     <div className="host" aria-label={`Hôte : ${name ?? ''}`}>
       <p className="host-name">{name ?? ''}</p>
-      <img
-        className="host-picture"
-        src={picture ?? ''}
-        alt={name ?? 'Hôte'}
-      />
+      {picture && (
+        <img
+          className="host-picture"
+          src={picture}
+          alt={name ?? 'Hôte'}
+        />
+      )}
     </div>
   );
 };

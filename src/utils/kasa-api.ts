@@ -1,6 +1,7 @@
-import { basename } from './config';
-import { ensureString, ensureArray, ensureNumber } from '@/helpers/validator';
 
+import { basename } from './config';
+
+import { ensureString, ensureArray, ensureNumber } from '@/helpers/validator';
 import type { Rental } from '@/types/rental';
 
 const dataUrl = `${basename === '/' ? '' : basename}/data/logements.json`;
@@ -27,7 +28,6 @@ const fetchRentalById = async (id: string): Promise<Rental> => {
 
 export { fetchRentals, fetchRentalById };
 
-
 export const buildRental = (rental: Rental) => {
   const { pictures, cover, rating, title, location, tags, description } = rental;
 
@@ -46,7 +46,7 @@ export const buildRental = (rental: Rental) => {
 
   // Number fields
   const ratingValue = ensureNumber(rating ?? '0', 0, 5);
-  const locationRatingMax = 5; // Max stars in rating system
+  const locationRatingMax = 5;
 
   return {
     ...rental,

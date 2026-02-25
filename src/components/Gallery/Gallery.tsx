@@ -3,10 +3,10 @@ import './style.css';
 
 interface GalleryProps {
   pictures?: string[];
-  total?: number;
 }
 
-const Gallery = ({ pictures = [], total = 0 }: GalleryProps) => {
+const Gallery = ({ pictures = [] }: GalleryProps) => {
+  const total = pictures.length;
   const { currentIndex, goToPrevious, goToNext, handleKeyDown } = useGalleryNavigation(total);
   const currentPicture = pictures[currentIndex];
   const counterId = 'gallery-counter';

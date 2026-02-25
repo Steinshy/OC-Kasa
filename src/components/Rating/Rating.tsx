@@ -2,9 +2,14 @@ import { Star } from 'lucide-react';
 
 import './style.css';
 
-const Rating = ({ ratingValue = 0, locationRatingMax = 5 }) => {
+interface RatingProps {
+  ratingValue?: number;
+  locationRatingMax?: number;
+}
+
+const Rating = ({ ratingValue = 0, locationRatingMax = 5 }: RatingProps) => {
   return (
-    <div className="rental-rating" aria-label={`Note : ${ratingValue} sur ${locationRatingMax}`}>
+    <div className="rating" aria-label={`Note : ${ratingValue} sur ${locationRatingMax}`}>
       {Array.from({ length: locationRatingMax }, (_, index) => (
         <Star
           key={index}

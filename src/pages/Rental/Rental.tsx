@@ -1,11 +1,12 @@
 import { useLoaderData } from 'react-router';
 
-import { buildRental } from '@/utils/kasa-api';
+import Collapse from '@/components/Collapse';
 import Gallery from '@/components/Gallery';
 import Host from '@/components/Host';
 import Rating from '@/components/Rating';
 import Tags from '@/components/Tags';
 import type { Rental as RentalType } from '@/types/rental';
+import { buildRental } from '@/utils/kasa-api';
 
 import './style.css';
 
@@ -21,9 +22,9 @@ const Rental = () => {
     location,
     locationTags,
     description,
+    equipments,
     host,
     images,
-    totalImages,
     ratingValue,
     locationRatingMax,
   } = buildRental(rental);
@@ -31,7 +32,7 @@ const Rental = () => {
   return (
     <div className="rental-page">
       <div className="rental-hero">
-        <Gallery pictures={images} total={totalImages} />
+        <Gallery pictures={images} />
       </div>
       <div className="rental-content">
         <div className="rental-main">
@@ -45,7 +46,23 @@ const Rental = () => {
             <Rating ratingValue={ratingValue} locationRatingMax={locationRatingMax} />
           </div>
         </div>
-        <p className="rental-message">{description ?? ''}</p>
+        <div className="rental-collapses">
+          <Collapse title="Description" content={description ?? ''} />
+          <Collapse
+            title="Équipements"
+            content={
+              Array.isArray(equipments) && equipments.length > 0 ? (
+                <ul className="collapse-list">
+                  {equipments.map((equipment, index) => (
+                    <li key={index}>{equipment}</li>
+                  ))}
+                </ul>
+              ) : (
+                ''
+              )
+            }
+          />
+        </div>
       </div>
     </div>
   );
