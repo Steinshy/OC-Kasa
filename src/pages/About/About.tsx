@@ -38,11 +38,9 @@ const About = () => {
       </div>
       <div className="about-collapses">
         {ABOUT_SECTIONS.map((section) => (
-          <Collapse
-            key={section.title}
-            title={section.title}
-            content={section.content}
-          />
+          <Collapse key={section.title} title={section.title}>
+            {section.content}
+          </Collapse>
         ))}
       </div>
     </div>

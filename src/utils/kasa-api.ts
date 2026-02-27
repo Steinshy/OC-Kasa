@@ -20,7 +20,7 @@ const fetchRentals = async (): Promise<Rental[]> => {
 
 const fetchRentalById = async (id: string): Promise<Rental> => {
   const rentals = await fetchRentals();
-  const rental = rentals.find((r) => r.id === id);
+  const rental = rentals.find((rental) => rental.id === id);
 
   if (!rental) throw new Error(`Rental with id ${id} not found`);
   return rental;
@@ -29,20 +29,20 @@ const fetchRentalById = async (id: string): Promise<Rental> => {
 export { fetchRentals, fetchRentalById };
 
 export const buildRental = (rental: Rental) => {
-  const { pictures, cover, rating, title, location, tags, description } = rental;
+  const { pictures, cover, rating, title, location, tags, description, host } = rental;
 
   // String fields
   const cleanTitle = ensureString(title);
   const cleanLocation = ensureString(location);
   const cleanDescription = ensureString(description);
-
+  
   // Array fields
-  const images =
-    Array.isArray(pictures) && pictures.length > 0
-      ? pictures
-      : [cover].filter(Boolean);
+  const images = pictures?.length ? pictures : [ensureString(cover)];
   const totalImages = images.length;
-  const locationTags = ensureArray(tags) as string[];
+  const locationTags = ensureArray(tags);
+  
+  // Host
+  const cleanHost = { name: ensureString(host?.name), picture: ensureString(host?.picture) };
 
   // Number fields
   const ratingValue = ensureNumber(rating ?? '0', 0, 5);
@@ -53,6 +53,7 @@ export const buildRental = (rental: Rental) => {
     title: cleanTitle,
     location: cleanLocation,
     description: cleanDescription,
+    host: cleanHost,
     images,
     totalImages,
     locationTags,

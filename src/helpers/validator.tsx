@@ -11,7 +11,7 @@ export const ensureString = (value: unknown, defaultValue = ''): string =>
 /**
  * Ensures a value is an array, returns default if not
  */
-export const ensureArray = <T,>(value: unknown, defaultValue: T[] = []): T[] =>
+export const ensureArray = (value: unknown, defaultValue = []) : string[] =>
   Array.isArray(value) ? value : defaultValue;
 
 /**

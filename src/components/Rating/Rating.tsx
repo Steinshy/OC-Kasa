@@ -4,7 +4,7 @@ import './style.css';
 
 interface RatingProps {
   ratingValue?: number;
-  locationRatingMax?: number;
+  locationRatingMax: number;
 }
 
 const Rating = ({ ratingValue = 0, locationRatingMax = 5 }: RatingProps) => {

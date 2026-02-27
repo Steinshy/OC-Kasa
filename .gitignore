@@ -15,6 +15,7 @@ Frontend/node_modules
 Frontend/.idea
 Frontend/.stryker-tmp
 .serena
+.continue
 
 # Logs
 logs

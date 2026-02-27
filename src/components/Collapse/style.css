@@ -6,9 +6,12 @@
 }
 
 .collapse-header {
+  all: unset;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
   padding: 0.75rem 1.25rem;
   background-color: #ff6060;
   color: #ffffff;
@@ -42,18 +45,13 @@
 }
 
 .collapse-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s ease-out;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease-out;
 }
 
 .collapse-body.open {
-  grid-template-rows: 1fr;
-}
-
-.collapse-body-inner {
-  overflow: hidden;
-  min-height: 0;
+  max-height: 600px;
 }
 
 .collapse-content {
@@ -67,13 +65,9 @@
 
 .collapse-list {
   margin: 0;
-  padding: 1.25rem;
-  padding-left: 1.5rem;
+  padding: 0;
+  list-style: none;
   color: #ff6060;
   font-size: 1rem;
-  line-height: 1.5;
-}
-
-.collapse-list li {
-  margin-bottom: 0.25rem;
+  line-height: 1.8;
 }

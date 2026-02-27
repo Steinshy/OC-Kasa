@@ -37,8 +37,8 @@ const Rental = () => {
       <div className="rental-content">
         <div className="rental-main">
           <div className="rental-left">
-            <h1 className="rental-title">{title ?? ''}</h1>
-            <span className="rental-location">{location ?? ''}</span>
+            <h1 className="rental-title">{title}</h1>
+            <span className="rental-location">{location}</span>
             <Tags tags={locationTags} />
           </div>
           <div className="rental-right">
@@ -47,21 +47,10 @@ const Rental = () => {
           </div>
         </div>
         <div className="rental-collapses">
-          <Collapse title="Description" content={description ?? ''} />
-          <Collapse
-            title="Équipements"
-            content={
-              Array.isArray(equipments) && equipments.length > 0 ? (
-                <ul className="collapse-list">
-                  {equipments.map((equipment, index) => (
-                    <li key={index}>{equipment}</li>
-                  ))}
-                </ul>
-              ) : (
-                ''
-              )
-            }
-          />
+          <Collapse key="description" title="Description">
+            {description}
+          </Collapse>
+          <Collapse key="equipements" title="Équipements" items={equipments} />
         </div>
       </div>
     </div>
