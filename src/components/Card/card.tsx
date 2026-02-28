@@ -19,6 +19,7 @@ const Card = ({ rental }: CardProps) => {
           src={cover}
           alt={title || 'Logement'}
           className="card-image"
+          loading="lazy"
         />
         <h3 className="card-title">{title}</h3>
       </div>

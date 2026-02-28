@@ -27,3 +27,11 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 480px) {
+  .rental-tag {
+    font-size: 0.875rem;
+    --tag-padding-y: 0.25rem;
+    --tag-padding-x: 0.75rem;
+  }
+}
