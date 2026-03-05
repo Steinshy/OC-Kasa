@@ -1,0 +1,125 @@
+@use 'styles/variables' as *;
+
+:root {
+  background-color: $color-bg;
+  color: $color-text-dark;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  font-weight: 400;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+}
+
+a {
+  color: $color-primary;
+  font-weight: 500;
+  text-decoration: inherit;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-width: 320px;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  background-color: #1a1a1a;
+  border: 1px solid transparent;
+  border-radius: $border-radius-xs;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.6em 1.2em;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+}
+
+.error-fallback {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 300px;
+  padding: $spacing-xl;
+  text-align: center;
+
+  h2 {
+    color: $color-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $color-text;
+    margin-bottom: $spacing-lg;
+  }
+
+  a {
+    color: $color-primary;
+    text-decoration: underline;
+  }
+}
+
+.skip-to-main {
+  height: 1px;
+  left: -9999px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  z-index: 1000;
+
+  &:focus {
+    background: $color-primary;
+    border-radius: 4px;
+    color: $color-white;
+    font-weight: 600;
+    height: auto;
+    left: 10px;
+    outline: 2px solid $color-white;
+    outline-offset: 2px;
+    padding: $spacing-sm $spacing-lg;
+    position: fixed;
+    text-decoration: none;
+    top: 10px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: $color-bg;
+    color: $color-text-dark;
+  }
+}

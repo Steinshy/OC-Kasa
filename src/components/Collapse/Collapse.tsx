@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 import useCollapseNavigation from '@/hooks/use-collapse-navigation';
 
-import './style.css';
+import './style.scss';
 
 interface CollapseProps {
   title: string;

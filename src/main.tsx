@@ -12,7 +12,7 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Rental = lazy(() => import('./pages/Rental'));
 
-import './index.css';
+import './index.scss';
 
 const router = createBrowserRouter(
   [

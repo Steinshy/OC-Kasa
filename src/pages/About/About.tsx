@@ -1,6 +1,6 @@
 import Collapse from '@/components/Collapse';
 
-import './style.css';
+import './style.scss';
 
 interface AboutSection {
   title: string;

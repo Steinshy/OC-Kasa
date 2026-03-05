@@ -1,6 +1,6 @@
 import type { Host as HostType } from '@/types/rental';
 
-import './style.css';
+import './style.scss';
 
 interface HostProps {
   host?: HostType;

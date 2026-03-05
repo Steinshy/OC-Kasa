@@ -1,11 +1,17 @@
+import { Menu, X } from 'lucide-react';
+import { useState, useCallback } from 'react';
 import { Link, NavLink, Outlet, useNavigation } from 'react-router';
 
 import Loader from '@/components/Loader';
 
-import './style.css';
+import './style.scss';
 
 const Layout = () => {
   const navigation = useNavigation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
   return (
     <div className="layout">
@@ -15,14 +21,26 @@ const Layout = () => {
       <header className="layout-header">
         <nav className="nav">
           <Link to="/" className="nav-logo" aria-label="Kasa - Retour à l'accueil" />
-          <ul className="nav-links">
+          <button
+            type="button"
+            className="nav-hamburger"
+            onClick={toggleMenu}
+            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          {menuOpen && <div className="nav-overlay" onClick={closeMenu} />}
+          <ul className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
             <li>
-              <NavLink to="/" end>
+              <NavLink to="/" end onClick={closeMenu}>
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/about" onClick={closeMenu}>
+                About
+              </NavLink>
             </li>
           </ul>
         </nav>

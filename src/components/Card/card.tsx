@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 import type { Rental } from '@/types/rental';
 
-import './style.css';
+import './style.scss';
 
 interface CardProps {
   rental: Rental;

@@ -1,0 +1,29 @@
+@use '../../styles/mixins' as *;
+
+.loader {
+  &-wrapper {
+    @include flex-center;
+
+    min-height: 200px;
+  }
+
+  &-spinner {
+    --spinner-size: 48px;
+    --spinner-color: #{$color-primary};
+    --spinner-track: #{$color-border};
+    --spinner-thickness: 4px;
+
+    animation: spin 0.75s linear infinite;
+    border: var(--spinner-thickness) solid var(--spinner-track);
+    border-radius: 50%;
+    border-top-color: var(--spinner-color);
+    height: var(--spinner-size);
+    width: var(--spinner-size);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

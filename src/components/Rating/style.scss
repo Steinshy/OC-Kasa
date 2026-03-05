@@ -1,0 +1,26 @@
+@use '../../styles/variables' as *;
+
+.rating {
+  --star-filled: #{$color-primary};
+  --star-empty: #{$color-border};
+  --star-size: 30px;
+  --star-gap: 6px;
+
+  align-items: center;
+  display: flex;
+  gap: var(--star-gap);
+
+  .star {
+    height: var(--star-size);
+    stroke: none;
+    width: var(--star-size);
+
+    &.filled {
+      fill: var(--star-filled);
+    }
+
+    &.empty {
+      fill: var(--star-empty);
+    }
+  }
+}

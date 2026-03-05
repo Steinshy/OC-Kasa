@@ -8,7 +8,7 @@ import Tags from '@/components/Tags';
 import type { Rental as RentalType } from '@/types/rental';
 import { buildRental } from '@/utils/kasa-api';
 
-import './style.css';
+import './style.scss';
 
 const Rental = () => {
   const rental = useLoaderData() as RentalType;

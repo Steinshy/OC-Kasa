@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 
 const Loader = () => (
   <div className="loader-wrapper" role="status" aria-label="Chargement en cours">

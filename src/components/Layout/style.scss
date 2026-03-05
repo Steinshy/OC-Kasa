@@ -1,0 +1,230 @@
+@use '../../styles/mixins' as *;
+
+.layout {
+  background-color: $color-bg;
+  min-height: 100vh;
+
+  @include flex-column;
+
+  &-header {
+    background-color: $color-bg;
+    padding: 0 $spacing-xl;
+
+    @include tablet {
+      padding: 0 $spacing-md;
+    }
+  }
+
+  &-main {
+    background-color: $color-bg;
+    box-sizing: border-box;
+    flex: 1;
+    margin: 0 auto;
+    max-width: $max-width;
+    padding: $spacing-xl;
+    width: 100%;
+
+    @include tablet {
+      padding: $spacing-lg;
+    }
+  }
+
+  &-footer {
+    background-color: $color-bg-dark;
+    border-top: 1px solid $color-text;
+    padding: $spacing-xl;
+
+    @include tablet {
+      padding: $spacing-lg;
+    }
+  }
+}
+
+.nav {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: $max-width;
+  padding: $spacing-lg 0;
+  position: relative;
+  width: 100%;
+
+  @include tablet {
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+  }
+
+  &-hamburger {
+    align-items: center;
+    background: none;
+    border: none;
+    color: $color-text;
+    cursor: pointer;
+    display: none;
+    justify-content: center;
+    padding: $spacing-xs;
+    z-index: 11;
+
+    @include mobile {
+      display: flex;
+    }
+  }
+
+  &-overlay {
+    background: rgb(0 0 0 / 30%);
+    inset: 0;
+    position: fixed;
+    z-index: 9;
+  }
+
+  &-logo {
+    background-image: url('../../../public/logo_full.svg');
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 58px;
+    transition: opacity $transition-base;
+    width: 180px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @include tablet {
+      height: 43px;
+      width: 135px;
+    }
+
+    @include mobile {
+      height: 35px;
+      width: 110px;
+    }
+  }
+
+  &-links {
+    align-items: center;
+    display: flex;
+    gap: $spacing-2xl;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+
+    @include tablet {
+      gap: $spacing-lg;
+    }
+
+    @include mobile {
+      background-color: $color-bg;
+      border-radius: $border-radius-sm;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      left: 0;
+      padding: $spacing-sm 0;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      z-index: 10;
+
+      &--open {
+        display: flex;
+      }
+    }
+
+    li {
+      align-items: center;
+      display: flex;
+    }
+
+    a {
+      color: $color-text;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: $spacing-xs 0;
+      position: relative;
+      text-decoration: none;
+      transition: color $transition-base;
+
+      &:hover {
+        color: $color-primary;
+      }
+
+      &.active {
+        color: $color-primary;
+        font-weight: 600;
+        position: relative;
+
+        &::after {
+          background-color: $color-primary;
+          border-radius: 2px;
+          bottom: -8px;
+          content: '';
+          height: 3px;
+          left: 0;
+          position: absolute;
+          right: 0;
+        }
+      }
+
+      @include tablet {
+        font-size: 0.9rem;
+      }
+
+      @include mobile {
+        display: block;
+        padding: $spacing-sm $spacing-lg;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.footer {
+  &-content {
+    box-sizing: border-box;
+    color: $color-muted;
+    font-size: 0.9rem;
+    margin: 0 auto;
+    max-width: $max-width;
+    text-align: center;
+    width: 100%;
+
+    @include tablet {
+      font-size: 0.85rem;
+    }
+
+    p {
+      color: $color-white;
+      margin: 0;
+    }
+
+    a {
+      color: $color-muted;
+      text-decoration: none;
+    }
+  }
+
+  &-logo {
+    background-image: url('../../../public/logo_full.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    display: inline-block;
+    filter: brightness(0) invert(1);
+    height: 40px;
+    margin-bottom: $spacing-md;
+    transition: opacity $transition-base;
+    width: 125px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

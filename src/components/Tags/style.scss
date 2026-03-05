@@ -1,0 +1,28 @@
+@use '../../styles/mixins' as *;
+
+.rental-tags {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.rental-tag {
+  align-items: center;
+  background-color: $color-primary;
+  border-radius: $spacing-xs;
+  color: $color-white;
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: $spacing-lg;
+  padding: 0.35rem $spacing-md;
+  white-space: nowrap;
+
+  @include mobile {
+    font-size: 0.875rem;
+    padding: 0.25rem $spacing-sm;
+  }
+}

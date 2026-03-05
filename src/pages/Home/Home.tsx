@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router';
 import Card from '@/components/Card/card';
 import type { Rental } from '@/types/rental';
 
-import './style.css';
+import './style.scss';
 
 const Home = () => {
   const rentalsData = useLoaderData() as Rental[];

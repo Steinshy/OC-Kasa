@@ -1,6 +1,6 @@
 import { Star } from 'lucide-react';
 
-import './style.css';
+import './style.scss';
 
 interface RatingProps {
   ratingValue?: number;

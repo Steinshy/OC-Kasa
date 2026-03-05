@@ -1,5 +1,5 @@
 import useGalleryNavigation from '@/hooks/use-gallery-navigation';
-import './style.css';
+import './style.scss';
 
 interface GalleryProps {
   pictures?: string[];
