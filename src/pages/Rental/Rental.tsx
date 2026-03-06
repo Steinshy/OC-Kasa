@@ -5,8 +5,6 @@ import Gallery from '@/components/Gallery';
 import Host from '@/components/Host';
 import Rating from '@/components/Rating';
 import Tags from '@/components/Tags';
-import type { NormalizedRental } from '@/types/rental';
-
 import './style.scss';
 
 const Rental = () => {
@@ -20,7 +18,7 @@ const Rental = () => {
     images,
     ratingValue,
     locationRatingMax,
-  } = useLoaderData() as NormalizedRental;
+  } = useLoaderData();
 
   return (
     <div className="rental-page">

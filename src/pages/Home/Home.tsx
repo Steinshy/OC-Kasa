@@ -1,13 +1,12 @@
 import { useLoaderData } from 'react-router';
 
 import Card from '@/components/Card';
-import type { NormalizedRental } from '@/types/rental';
+import { fetchRentals } from '@/utils/kasa-api';
 
 import './style.scss';
 
 const Home = () => {
-  const rentals = useLoaderData() as NormalizedRental[];
-
+  const rentals = useLoaderData<Awaited<ReturnType<typeof fetchRentals>>>();
   return (
     <div className="home-page">
       <div className="home-hero">

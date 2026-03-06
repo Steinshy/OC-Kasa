@@ -197,7 +197,10 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     plugins: [
       checker({
         typescript: true,
-        eslint: { lintCommand: 'eslint src --ext .ts,.tsx' },
+        eslint: {
+          lintCommand: 'eslint "src/**/*.{ts,tsx}"',
+          useFlatConfig: true,
+        },
       }),
       tsconfigPaths(),
       react(),

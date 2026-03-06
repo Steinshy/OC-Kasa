@@ -16,6 +16,7 @@ export interface Rental {
   tags?: string[];
 }
 
+/** Validated rental data with all required fields and computed properties. Safe to use in UI. */
 export interface NormalizedRental extends Rental {
   id: string;
   title: string;

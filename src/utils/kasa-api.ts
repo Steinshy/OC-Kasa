@@ -1,41 +1,50 @@
-import { ensureArray, ensureNumber, ensureString } from '@/helpers/validator';
-import type { NormalizedRental, Rental } from '@/types/rental';
+import {
+  ensureArray,
+  ensureNumber,
+  ensureString,
+  isRecord,
+  isHost,
+} from '@/helpers/validator';
+import type { NormalizedRental } from '@/types/rental';
 import { basename } from '@/utils/config';
 
 const dataUrl = `${basename === '/' ? '' : basename}/data/logements.json`;
 
 let cachedRentals: NormalizedRental[] | null = null;
 
-export const buildRental = (rental: Rental): NormalizedRental => {
-  const { pictures, cover, rating, title, location, tags, description, host } =
-    rental;
+export const buildRental = (rental: unknown): NormalizedRental => {
+  if (!isRecord(rental)) {
+    throw new Error('Invalid rental data: expected an object');
+  }
 
-  const cleanId = ensureString(rental.id);
+  const rentalData = rental;
+  const hostRaw = isHost(rentalData.host) ? rentalData.host : {};
 
-  // String fields
-  const cleanTitle = ensureString(title);
-  const cleanLocation = ensureString(location);
-  const cleanDescription = ensureString(description);
+  const cleanId = ensureString(rentalData.id);
+  const cleanTitle = ensureString(rentalData.title);
+  const cleanLocation = ensureString(rentalData.location);
+  const cleanDescription = ensureString(rentalData.description);
+  const cleanCover = ensureString(rentalData.cover);
 
-  // Array fields
-  const images = pictures?.length ? pictures : [ensureString(cover)];
+  const pictures = Array.isArray(rentalData.pictures)
+    ? (rentalData.pictures as string[])
+    : [];
+  const images = pictures.length ? pictures : [cleanCover];
   const totalImages = images.length;
-  const locationTags = ensureArray(tags);
+  const locationTags = ensureArray(rentalData.tags);
 
-  // Host
   const cleanHost = {
-    name: ensureString(host?.name),
-    picture: ensureString(host?.picture),
+    name: ensureString(hostRaw.name),
+    picture: ensureString(hostRaw.picture),
   };
 
-  // Number fields
-  const ratingValue = ensureNumber(rating ?? '0', 0, 5);
+  const ratingValue = ensureNumber(rentalData.rating ?? '0', 0, 5);
   const locationRatingMax = 5;
 
   return {
-    ...rental,
     id: cleanId,
     title: cleanTitle,
+    cover: cleanCover,
     location: cleanLocation,
     description: cleanDescription,
     host: cleanHost,
@@ -44,7 +53,12 @@ export const buildRental = (rental: Rental): NormalizedRental => {
     locationTags,
     ratingValue,
     locationRatingMax,
-  } as NormalizedRental;
+    pictures: pictures.length ? pictures : undefined,
+    equipments: Array.isArray(rentalData.equipments)
+      ? (rentalData.equipments as string[])
+      : undefined,
+    rating: ensureString(rentalData.rating) || undefined,
+  };
 };
 
 export const fetchRentals = async (): Promise<NormalizedRental[]> => {
@@ -58,7 +72,7 @@ export const fetchRentals = async (): Promise<NormalizedRental[]> => {
   if (!Array.isArray(data))
     throw new Error('Invalid data format: expected an array');
 
-  const rentals = (data as Rental[]).map((raw) => buildRental(raw));
+  const rentals = data.map((raw: unknown) => buildRental(raw));
   cachedRentals = rentals;
 
   return rentals;
