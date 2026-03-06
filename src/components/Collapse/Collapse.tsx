@@ -12,9 +12,15 @@ interface CollapseProps {
   defaultOpen?: boolean;
 }
 
-const Collapse = ({ title, children, items, defaultOpen = false }: CollapseProps) => {
+const Collapse = ({
+  title,
+  children,
+  items,
+  defaultOpen = false,
+}: CollapseProps) => {
   const uid = useId();
-  const { isOpen, toggleOpen, handleKeyDown } = useCollapseNavigation(defaultOpen);
+  const { isOpen, toggleOpen, handleKeyDown } =
+    useCollapseNavigation(defaultOpen);
 
   const hasContent = children != null && children !== '';
   const hasItems = items != null && items.length > 0;
@@ -44,7 +50,10 @@ const Collapse = ({ title, children, items, defaultOpen = false }: CollapseProps
         aria-controls={bodyId}
       >
         <h3 className="collapse-title">{title}</h3>
-        <span className={`collapse-chevron ${isOpen ? 'open' : ''}`} aria-hidden="true" />
+        <span
+          className={`collapse-chevron ${isOpen ? 'open' : ''}`}
+          aria-hidden="true"
+        />
       </button>
       <div
         id={bodyId}

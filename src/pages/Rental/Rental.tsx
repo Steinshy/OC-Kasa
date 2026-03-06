@@ -5,18 +5,11 @@ import Gallery from '@/components/Gallery';
 import Host from '@/components/Host';
 import Rating from '@/components/Rating';
 import Tags from '@/components/Tags';
-import type { Rental as RentalType } from '@/types/rental';
-import { buildRental } from '@/utils/kasa-api';
+import type { NormalizedRental } from '@/types/rental';
 
 import './style.scss';
 
 const Rental = () => {
-  const rental = useLoaderData() as RentalType;
-
-  if (!rental || typeof rental !== 'object') {
-    return null;
-  }
-
   const {
     title,
     location,
@@ -27,7 +20,7 @@ const Rental = () => {
     images,
     ratingValue,
     locationRatingMax,
-  } = buildRental(rental);
+  } = useLoaderData() as NormalizedRental;
 
   return (
     <div className="rental-page">
@@ -43,7 +36,10 @@ const Rental = () => {
           </div>
           <div className="rental-right">
             <Host host={host} />
-            <Rating ratingValue={ratingValue} locationRatingMax={locationRatingMax} />
+            <Rating
+              ratingValue={ratingValue}
+              locationRatingMax={locationRatingMax}
+            />
           </div>
         </div>
         <div className="rental-collapses">

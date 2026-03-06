@@ -7,7 +7,8 @@ interface GalleryProps {
 
 const Gallery = ({ pictures = [] }: GalleryProps) => {
   const total = pictures.length;
-  const { currentIndex, goToPrevious, goToNext, handleKeyDown } = useGalleryNavigation(total);
+  const { currentIndex, goToPrevious, goToNext, handleKeyDown } =
+    useGalleryNavigation(total);
   const currentPicture = pictures[currentIndex];
   const counterId = 'gallery-counter';
   if (total === 0) return null;

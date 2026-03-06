@@ -5,6 +5,7 @@
 ## Phase 1: Core Functionality
 
 ### 1. Gallery Component
+
 - [x] Create `src/components/Gallery/Gallery.jsx`
 - [x] Create `src/components/Gallery/style.css`
 - [x] Implement state management for current image index
@@ -16,6 +17,7 @@
 - [x] Add responsive design
 
 ### 2. Interactive Collapse Component
+
 - [x] Refactor `src/components/Dropdown/Dropdown.jsx` to `Collapse.jsx`
 - [x] Add `useState` for open/closed state
 - [x] Implement click toggle functionality
@@ -26,6 +28,7 @@
 - [x] Default state: closed on page load
 
 ### 3. Enhanced Rental Detail Page
+
 - [x] Integrate Gallery component (pictures array)
 - [x] Add title and location display
 - [x] Add host profile section (name + picture)
@@ -41,12 +44,14 @@
 ## Phase 2: UI Components & Polish
 
 ### 4. Rating Component
+
 - [x] Create `src/components/Rating/Rating.jsx`
 - [x] Create `src/components/Rating/style.css`
 - [x] Implement star rendering logic (filled/empty, 1-5)
 - [x] Add ARIA labels for accessibility
 
 ### 5. Tag Component
+
 - [x] Create `src/components/Tag/Tag.jsx`
 - [x] Create `src/components/Tag/style.css`
 - [x] Style as badges/chips (#ff6060 background)
@@ -54,6 +59,7 @@
 - [x] Add responsive sizing
 
 ### 6. Responsive Design
+
 - [x] Implement mobile layout (<768px) - 1 column grid
 - [x] Implement tablet layout (768px-1024px) - 2 column grid
 - [x] Implement desktop layout (>1024px) - 3 column grid
@@ -63,6 +69,7 @@
 - [x] Test all interactions on touch devices
 
 ### 7. About Page Content
+
 - [x] Add company information sections with Collapse components
 - [x] Style page layout per Figma mockups
 - [x] Add responsive design
@@ -72,6 +79,7 @@
 ## Phase 3: Quality & Performance
 
 ### 8. CI Pipeline Fixes
+
 - [x] Remove `continue-on-error: true` from all jobs in `ci.yml`
 - [x] Remove `|| true` from all commands
 - [x] Consolidate duplicate security jobs (security-scan + dependency-audit)
@@ -79,6 +87,7 @@
 - [x] Add caching optimization for node_modules and build output
 
 ### 9. Error Handling & Accessibility
+
 - [x] Improve NotFound page design
 - [x] Add loading states for async operations
 - [x] Audit keyboard navigation across all components
@@ -88,6 +97,7 @@
 - [x] Test with accessibility tools
 
 ### 10. Performance Optimization
+
 - [x] Analyze bundle size
 - [x] Implement code splitting if needed
 - [x] Optimize images (lazy loading)

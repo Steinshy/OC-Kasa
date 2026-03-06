@@ -1,16 +1,15 @@
 import { Link } from 'react-router';
 
-import type { Rental } from '@/types/rental';
+import type { NormalizedRental } from '@/types/rental';
 
 import './style.scss';
 
 interface CardProps {
-  rental: Rental;
+  rental: NormalizedRental;
 }
 
 const Card = ({ rental }: CardProps) => {
   const { id, title, cover } = rental;
-  if (!id) return null;
 
   return (
     <Link to={`/rental/${id}`}>
@@ -28,3 +27,4 @@ const Card = ({ rental }: CardProps) => {
 };
 
 export default Card;
+

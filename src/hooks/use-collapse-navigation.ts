@@ -7,7 +7,9 @@ interface UseCollapseNavigationReturn {
   handleKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
 }
 
-const useCollapseNavigation = (defaultOpen = false): UseCollapseNavigationReturn => {
+const useCollapseNavigation = (
+  defaultOpen = false
+): UseCollapseNavigationReturn => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);

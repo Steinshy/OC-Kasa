@@ -6,7 +6,9 @@
   height: 255px;
   overflow: hidden;
   position: relative;
-  transition: box-shadow $transition-slow, transform $transition-slow;
+  transition:
+    box-shadow $transition-slow,
+    transform $transition-slow;
 
   @media (hover: hover) {
     &:hover {

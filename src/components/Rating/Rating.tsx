@@ -9,7 +9,10 @@ interface RatingProps {
 
 const Rating = ({ ratingValue = 0, locationRatingMax = 5 }: RatingProps) => {
   return (
-    <div className="rating" aria-label={`Note : ${ratingValue} sur ${locationRatingMax}`}>
+    <div
+      className="rating"
+      aria-label={`Note : ${ratingValue} sur ${locationRatingMax}`}
+    >
       {Array.from({ length: locationRatingMax }, (_, index) => (
         <Star
           key={index}

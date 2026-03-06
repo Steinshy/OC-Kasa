@@ -13,16 +13,9 @@ const Host = ({ host }: HostProps) => {
   return (
     <div className="host" aria-label={`Hôte : ${name}`}>
       <p className="host-name">{name}</p>
-      {picture && (
-        <img
-          className="host-picture"
-          src={picture}
-          alt={name}
-        />
-      )}
+      {picture && <img className="host-picture" src={picture} alt={name} />}
     </div>
   );
 };
-
 
 export default Host;

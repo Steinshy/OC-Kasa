@@ -1,13 +1,12 @@
 import { useLoaderData } from 'react-router';
 
-import Card from '@/components/Card/card';
-import type { Rental } from '@/types/rental';
+import Card from '@/components/Card';
+import type { NormalizedRental } from '@/types/rental';
 
 import './style.scss';
 
 const Home = () => {
-  const rentalsData = useLoaderData() as Rental[];
-  const rentalsList = Array.isArray(rentalsData) ? rentalsData : [];
+  const rentals = useLoaderData() as NormalizedRental[];
 
   return (
     <div className="home-page">
@@ -15,8 +14,8 @@ const Home = () => {
         <h1>Chez vous, partout et ailleurs</h1>
       </div>
       <div className="cards-container">
-        {rentalsList.map((rental, index) => (
-          <Card key={rental?.id ?? index} rental={rental} />
+        {rentals.map((rental) => (
+          <Card key={rental.id} rental={rental} />
         ))}
       </div>
     </div>

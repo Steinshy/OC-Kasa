@@ -20,7 +20,11 @@ const Layout = () => {
       </a>
       <header className="layout-header">
         <nav className="nav">
-          <Link to="/" className="nav-logo" aria-label="Kasa - Retour à l'accueil" />
+          <Link
+            to="/"
+            className="nav-logo"
+            aria-label="Kasa - Retour à l'accueil"
+          />
           <button
             type="button"
             className="nav-hamburger"
@@ -50,7 +54,11 @@ const Layout = () => {
       </main>
       <footer className="layout-footer">
         <div className="footer-content">
-          <Link to="/" className="footer-logo" aria-label="Kasa - Retour à l'accueil" />
+          <Link
+            to="/"
+            className="footer-logo"
+            aria-label="Kasa - Retour à l'accueil"
+          />
           <p>&copy; 2026 Kasa. All rights reserved.</p>
         </div>
       </footer>

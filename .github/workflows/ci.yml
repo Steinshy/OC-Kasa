@@ -86,13 +86,16 @@ jobs:
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Run npm audit
-        continue-on-error: true
-        run: npm audit --audit-level=moderate
-
       - name: Check for outdated packages
         if: always()
-        run: npm outdated || true
+        run: |
+          echo "Checking for outdated packages..."
+          OUTDATED=$(npm outdated --json || true)
+          if [ "$OUTDATED" != "" ] && [ "$OUTDATED" != "null" ]; then
+            echo "Some dependencies are outdated. Run 'npm outdated' locally for details."
+          else
+            echo "Dependencies are up to date."
+          fi
 
       - name: Generate audit report
         if: always()
@@ -136,14 +139,14 @@ jobs:
         run: |
           echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### JavaScript Bundles" >> $GITHUB_STEP_SUMMARY
-          find dist/assets -name "*.js" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### CSS Bundles" >> $GITHUB_STEP_SUMMARY
-          find dist/assets -name "*.css" -type f -exec sh -c 'echo "- \`$1\`: $(du -h "$1" | cut -f1)"' _ {} \; >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Total Bundle Size" >> $GITHUB_STEP_SUMMARY
-          du -sh dist >> $GITHUB_STEP_SUMMARY
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          TOTAL_SIZE=$(du -sb dist 2>/dev/null | awk '{print int($1/1024)}' || echo "0")
+
+          echo "### Bundle Sizes (KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- JavaScript: ${JS_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- CSS: ${CSS_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- Total: ${TOTAL_SIZE}" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload bundle stats
         uses: actions/upload-artifact@v4
