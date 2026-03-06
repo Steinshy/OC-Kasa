@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="54"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="47" height="54"><svg xmlns="http://www.w3.org/2000/svg" width="47" height="54" fill="none">
-  <path fill="#FF6060" d="M31.3088 35.2044v12.5994l5.3409-3.1498V32.0545l-5.3409 3.1499Z"></path>
-  <path fill="#FF6060" d="M46.0424 19.8256 24.1262 7.04087 11.971 0 0 20.9373l.184167 19.6404L21.9162 53.3624l2.21-1.297V33.5368l9.761-17.2316 9.9451 5.7438v18.5287l2.2101-1.297V19.8256Z"></path>
-</svg></svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 54"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 47 54"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 47 54"><path fill="#ff6060" d="M31.3088 35.2044v12.5994l5.3409-3.1498V32.0545z"/><path fill="#ff6060" d="M46.0424 19.8256 24.1262 7.04087 11.971 0 0 20.9373l.184167 19.6404L21.9162 53.3624l2.21-1.297V33.5368l9.761-17.2316 9.9451 5.7438v18.5287l2.2101-1.297z"/></svg></svg></svg>

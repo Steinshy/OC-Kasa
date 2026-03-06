@@ -14,4 +14,3 @@ export const ensureNumber = (
   const rounded = Math.round(num) || defaultValue;
   return Math.min(max, Math.max(min, rounded));
 };
-

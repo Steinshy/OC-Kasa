@@ -64,11 +64,12 @@ export const fetchRentals = async (): Promise<NormalizedRental[]> => {
   return rentals;
 };
 
-export const fetchRentalById = async (id: string): Promise<NormalizedRental> => {
+export const fetchRentalById = async (
+  id: string
+): Promise<NormalizedRental> => {
   const rentals = await fetchRentals();
   const rental = rentals.find((item) => item.id === id);
 
   if (!rental) throw new Error(`Rental with id ${id} not found`);
   return rental;
 };
-

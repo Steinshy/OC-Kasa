@@ -27,4 +27,3 @@ const Card = ({ rental }: CardProps) => {
 };
 
 export default Card;
-

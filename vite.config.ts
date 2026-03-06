@@ -11,8 +11,66 @@ const vitePWA = VitePWA({
     'favicon.svg',
     'favicon-96x96.png',
     'apple-touch-icon.png',
-    'site.webmanifest',
+    'web-app-manifest-192x192.png',
+    'web-app-manifest-512x512.png',
   ],
+  manifest: {
+    name: "Kasa - Location d'appartements entre particuliers",
+    short_name: 'Kasa',
+    description:
+      "Plateforme web de location d'appartements entre particuliers. Trouvez votre logement idéal avec des descriptions détaillées et des photos.",
+    theme_color: '#ff6060',
+    background_color: '#ffffff',
+    display: 'standalone',
+    orientation: 'portrait-primary',
+    start_url: '/',
+    scope: '/',
+    icons: [
+      {
+        src: '/web-app-manifest-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any maskable',
+      },
+      {
+        src: '/web-app-manifest-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable',
+      },
+      {
+        src: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/pwa-android-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/pwa-android-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
+    screenshots: [
+      {
+        src: '/web-app-manifest-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        form_factor: 'wide',
+      },
+      {
+        src: '/web-app-manifest-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        form_factor: 'narrow',
+      },
+    ],
+    categories: ['shopping', 'lifestyle'],
+  },
   workbox: {
     globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}'],
     globIgnores: ['**/assets/background_*.jpg'],
@@ -104,7 +162,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     cssCodeSplit: true,
     cssMinify: 'esbuild' as const,
     assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     minify: 'esbuild' as const,
     reportCompressedSize: true,
     modulePreload: {
@@ -136,19 +194,22 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   }
 
   return {
-    plugins: [checker({ typescript: true }), tsconfigPaths(), react(), vitePWA],
+    plugins: [
+      checker({
+        typescript: true,
+        eslint: { lintCommand: 'eslint src --ext .ts,.tsx' },
+      }),
+      tsconfigPaths(),
+      react(),
+      vitePWA,
+    ],
     // eslint-disable-next-line no-undef
     base: process.env.VITE_BASE_PATH || '/',
     publicDir: './public',
     server: commonServerOptions,
     build: buildOptions,
     optimizeDeps: {
-      include: [
-        'lucide-react',
-        'react',
-        'react-dom',
-        'react-router',
-      ],
+      include: ['lucide-react', 'react', 'react-dom', 'react-router'],
     },
     preview: {
       host: '0.0.0.0',
