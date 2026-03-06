@@ -22,6 +22,12 @@ export default [
       'public/**',
     ],
   },
+  {
+    files: ['vite.config.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
   js.configs.recommended,
   {
     files: ['**/*.{js,ts}'],

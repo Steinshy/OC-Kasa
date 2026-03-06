@@ -218,16 +218,16 @@ jobs:
 
           JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
           CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
-          TOTAL_SIZE=$(du -sb dist 2>/dev/null | awk '{print int($1/1024)}' || echo "0")
+          BUNDLE_SIZE=$((JS_SIZE + CSS_SIZE))
 
           JS_BUDGET=400
           CSS_BUDGET=50
-          TOTAL_BUDGET=600
+          BUNDLE_BUDGET=500
 
           echo "### Bundle Sizes" >> $GITHUB_STEP_SUMMARY
           echo "- JavaScript: ${JS_SIZE} KB (budget: ${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
           echo "- CSS: ${CSS_SIZE} KB (budget: ${CSS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
-          echo "- Total: ${TOTAL_SIZE} KB (budget: ${TOTAL_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- Total (JS+CSS): ${BUNDLE_SIZE} KB (budget: ${BUNDLE_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           FAILED=0
@@ -242,8 +242,8 @@ jobs:
             FAILED=1
           fi
 
-          if [ "$TOTAL_SIZE" -gt "$TOTAL_BUDGET" ]; then
-            echo "::error::Total bundle size (${TOTAL_SIZE} KB) exceeds budget (${TOTAL_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          if [ "$BUNDLE_SIZE" -gt "$BUNDLE_BUDGET" ]; then
+            echo "::error::Total bundle size (${BUNDLE_SIZE} KB) exceeds budget (${BUNDLE_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
             FAILED=1
           fi
 

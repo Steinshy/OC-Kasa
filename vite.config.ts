@@ -4,12 +4,12 @@ import checker from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-const basePath =
-  (process.env.VITE_BASE_PATH || '/').replace(/\/*$/, '') ||
-  '/';
+const basePath = (process.env.VITE_BASE_PATH || '/').replace(/\/*$/, '') || '/';
 const basePathWithSlash = basePath === '/' ? '/' : `${basePath}/`;
 const siteUrl = (process.env.VITE_PUBLIC_SITE_URL || '').replace(/\/$/, '');
-const assetBase = siteUrl ? `${siteUrl}${basePathWithSlash}` : basePathWithSlash;
+const assetBase = siteUrl
+  ? `${siteUrl}${basePathWithSlash}`
+  : basePathWithSlash;
 
 const vitePWA = VitePWA({
   registerType: 'autoUpdate',
@@ -31,7 +31,9 @@ const vitePWA = VitePWA({
     display: 'standalone',
     orientation: 'portrait-primary',
     start_url: siteUrl ? `${assetBase}` : basePathWithSlash,
-    scope: siteUrl ? `${siteUrl}${basePath === '/' ? '/' : basePath}/` : basePathWithSlash,
+    scope: siteUrl
+      ? `${siteUrl}${basePath === '/' ? '/' : basePath}/`
+      : basePathWithSlash,
     icons: [
       {
         src: `${assetBase}web-app-manifest-192x192.png`,
@@ -153,7 +155,6 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const commonServerOptions = {
     proxy: {
       '/api': {
-        // eslint-disable-next-line no-undef
         target: process.env.VITE_PUBLIC_API_SERVER || 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/api/, ''),
@@ -213,7 +214,6 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       react(),
       vitePWA,
     ],
-    // eslint-disable-next-line no-undef
     base: process.env.VITE_BASE_PATH || '/',
     publicDir: './public',
     server: commonServerOptions,
