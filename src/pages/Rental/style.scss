@@ -3,32 +3,45 @@
 .rental-page {
   @include flex-column;
 
-  align-items: center;
+  align-items: stretch;
   justify-content: start;
-  min-height: calc(100vh - 200px);
+  min-width: 0;
+  width: 100%;
 }
 
 .rental-hero {
   margin-bottom: $spacing-lg;
   width: 100%;
+
+  @include tablet {
+    margin-bottom: $spacing-md;
+  }
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
 }
 
 .rental-content {
   @include flex-column;
 
   align-items: start;
-  justify-content: center;
+  justify-content: start;
   max-width: $content-max-width;
-  padding: $spacing-xl;
   width: 100%;
 }
 
 .rental-title {
   color: $color-primary;
-  font-size: 36px;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
   font-weight: 700;
+  line-height: 1.2;
   margin-bottom: $spacing-md;
   text-align: start;
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
 }
 
 .rental-message {
@@ -45,18 +58,29 @@
   font-weight: 500;
   margin-bottom: $spacing-md;
   text-align: start;
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
 }
 
 .rental-main {
   align-items: flex-start;
   display: flex;
-  gap: $spacing-md;
+  gap: $spacing-lg;
   justify-content: space-between;
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-2xl;
   width: 100%;
 
   @include tablet {
     flex-direction: column;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+  }
+
+  @include mobile {
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
   }
 }
 
@@ -72,10 +96,29 @@
 
   align-items: flex-end;
   flex-shrink: 0;
-  gap: $spacing-sm;
+  gap: $spacing-md;
+  justify-content: flex-start;
 
   @include tablet {
-    align-items: flex-start;
+    align-items: center;
+    background-color: $color-bg-light;
+    border-radius: $border-radius-xs;
+    flex-direction: row;
+    gap: $spacing-lg;
+    justify-content: space-between;
+    padding: $spacing-sm $spacing-md;
+    width: 100%;
+  }
+
+  @include mobile {
+    align-items: center;
+    background-color: $color-bg-light;
+    border-radius: $border-radius-xs;
+    flex-direction: row;
+    gap: $spacing-sm;
+    justify-content: space-between;
+    padding: $spacing-xs $spacing-sm;
+    width: 100%;
   }
 }
 
@@ -92,7 +135,14 @@
   }
 
   @include tablet {
+    align-items: stretch;
     flex-direction: column;
     gap: $spacing-md;
+    margin-top: $spacing-lg;
+  }
+
+  @include mobile {
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
   }
 }

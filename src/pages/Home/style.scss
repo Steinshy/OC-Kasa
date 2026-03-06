@@ -19,6 +19,14 @@
   margin: 0 auto;
   min-height: calc(100vh - 200px);
   padding: $spacing-xl;
+
+  @include tablet {
+    padding: $spacing-lg;
+  }
+
+  @include mobile {
+    padding: $spacing-md;
+  }
 }
 
 .home-hero {

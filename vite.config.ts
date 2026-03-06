@@ -4,6 +4,13 @@ import checker from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+const basePath =
+  (process.env.VITE_BASE_PATH || '/').replace(/\/*$/, '') ||
+  '/';
+const basePathWithSlash = basePath === '/' ? '/' : `${basePath}/`;
+const siteUrl = (process.env.VITE_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+const assetBase = siteUrl ? `${siteUrl}${basePathWithSlash}` : basePathWithSlash;
+
 const vitePWA = VitePWA({
   registerType: 'autoUpdate',
   includeAssets: [
@@ -23,47 +30,47 @@ const vitePWA = VitePWA({
     background_color: '#ffffff',
     display: 'standalone',
     orientation: 'portrait-primary',
-    start_url: '/',
-    scope: '/',
+    start_url: siteUrl ? `${assetBase}` : basePathWithSlash,
+    scope: siteUrl ? `${siteUrl}${basePath === '/' ? '/' : basePath}/` : basePathWithSlash,
     icons: [
       {
-        src: '/web-app-manifest-192x192.png',
+        src: `${assetBase}web-app-manifest-192x192.png`,
         sizes: '192x192',
         type: 'image/png',
         purpose: 'any maskable',
       },
       {
-        src: '/web-app-manifest-512x512.png',
+        src: `${assetBase}web-app-manifest-512x512.png`,
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any maskable',
       },
       {
-        src: '/apple-touch-icon.png',
+        src: `${assetBase}apple-touch-icon.png`,
         sizes: '180x180',
         type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/pwa-android-192x192.png',
+        src: `${assetBase}pwa-android-192x192.png`,
         sizes: '192x192',
         type: 'image/png',
       },
       {
-        src: '/pwa-android-512x512.png',
+        src: `${assetBase}pwa-android-512x512.png`,
         sizes: '512x512',
         type: 'image/png',
       },
     ],
     screenshots: [
       {
-        src: '/web-app-manifest-512x512.png',
+        src: `${assetBase}web-app-manifest-512x512.png`,
         sizes: '512x512',
         type: 'image/png',
         form_factor: 'wide',
       },
       {
-        src: '/web-app-manifest-192x192.png',
+        src: `${assetBase}web-app-manifest-192x192.png`,
         sizes: '192x192',
         type: 'image/png',
         form_factor: 'narrow',

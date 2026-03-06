@@ -3,6 +3,8 @@
 .layout {
   background-color: $color-bg;
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
 
   @include flex-column;
 
@@ -13,6 +15,10 @@
     @include tablet {
       padding: 0 $spacing-md;
     }
+
+    @include mobile {
+      padding: 0 $spacing-sm;
+    }
   }
 
   &-main {
@@ -21,11 +27,16 @@
     flex: 1;
     margin: 0 auto;
     max-width: $max-width;
+    min-width: 0;
     padding: $spacing-xl;
     width: 100%;
 
     @include tablet {
       padding: $spacing-lg;
+    }
+
+    @include mobile {
+      padding: $spacing-md;
     }
   }
 
@@ -36,6 +47,10 @@
 
     @include tablet {
       padding: $spacing-lg;
+    }
+
+    @include mobile {
+      padding: $spacing-md;
     }
   }
 }

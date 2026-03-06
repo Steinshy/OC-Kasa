@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react';
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 
@@ -50,7 +51,7 @@ const Collapse = ({
         aria-controls={bodyId}
       >
         <h3 className="collapse-title">{title}</h3>
-        <span
+        <ChevronDown
           className={`collapse-chevron ${isOpen ? 'open' : ''}`}
           aria-hidden="true"
         />

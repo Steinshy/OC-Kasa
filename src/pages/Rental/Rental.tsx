@@ -1,9 +1,9 @@
 import { useLoaderData } from 'react-router';
 
 import Collapse from '@/components/Collapse';
-import Gallery from '@/components/Gallery';
 import Host from '@/components/Host';
 import Rating from '@/components/Rating';
+import RentalGallery from '@/components/RentalGallery';
 import Tags from '@/components/Tags';
 import './style.scss';
 
@@ -23,7 +23,7 @@ const Rental = () => {
   return (
     <div className="rental-page">
       <div className="rental-hero">
-        <Gallery pictures={images} />
+        <RentalGallery pictures={images} />
       </div>
       <div className="rental-content">
         <div className="rental-main">

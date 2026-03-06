@@ -1,4 +1,4 @@
-@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .card {
   border-radius: $border-radius-sm;
@@ -9,6 +9,10 @@
   transition:
     box-shadow $transition-slow,
     transform $transition-slow;
+
+  @include mobile {
+    height: 300px;
+  }
 
   @media (hover: hover) {
     &:hover {
