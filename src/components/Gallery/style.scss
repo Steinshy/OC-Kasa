@@ -1,0 +1,101 @@
+@use '../../styles/mixins' as *;
+
+.gallery {
+  aspect-ratio: 16 / 6;
+  background-color: $color-bg-dark;
+  border-radius: $border-radius-lg;
+  max-height: 415px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  @include tablet {
+    border-radius: $border-radius-md;
+    max-height: none;
+  }
+
+  @include mobile {
+    aspect-ratio: 3 / 2;
+    border-radius: $border-radius-sm;
+    max-height: none;
+  }
+
+  &-image {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &-nav {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 4rem;
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0 $spacing-md;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity $transition-fast;
+
+    @include flex-center;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 2px;
+    }
+
+    @include tablet {
+      font-size: 2.5rem;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0 $spacing-xs;
+    }
+
+    @include mobile {
+      font-size: 1.5rem;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0 $spacing-xs;
+    }
+  }
+
+  &-prev {
+    left: 0;
+  }
+
+  &-next {
+    right: 0;
+  }
+
+  &-counter {
+    background: rgb(0 0 0 / 40%);
+    border-radius: $spacing-xs;
+    bottom: $spacing-lg;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 500;
+    left: 50%;
+    padding: 0.25rem $spacing-sm;
+    position: absolute;
+    transform: translateX(-50%);
+
+    @include tablet {
+      bottom: $spacing-md;
+      font-size: 1rem;
+      padding: 0.2rem $spacing-xs;
+    }
+
+    @include mobile {
+      bottom: $spacing-sm;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.4rem;
+    }
+  }
+}

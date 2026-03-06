@@ -1,0 +1,90 @@
+@use 'variables' as *;
+@forward 'variables';
+
+// ─── Responsive breakpoints ───────────────────
+@mixin small-desktop {
+  @media (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+// ─── Flex helpers ─────────────────────────────
+@mixin flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// ─── Hero overlay ─────────────────────────────
+@mixin hero-overlay {
+  &::before {
+    background: linear-gradient(
+      135deg,
+      rgb(0 0 0 / 70%) 0%,
+      rgb(0 0 0 / 40%) 40%,
+      rgb(255 96 96 / 30%) 100%
+    );
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &::after {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgb(0 0 0 / 35%) 100%
+    );
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+// ─── Hero base ────────────────────────────────
+@mixin hero-base($bg-image) {
+  background-image: url($bg-image);
+  background-position: center;
+  background-size: cover;
+  border-radius: $border-radius-lg;
+  box-sizing: border-box;
+  height: clamp(200px, 30vw, 350px);
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  padding: $spacing-xl;
+  position: relative;
+  width: 100%;
+
+  @include flex-center;
+
+  @include tablet {
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  @include mobile {
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-md;
+  }
+}

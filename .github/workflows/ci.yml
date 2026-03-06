@@ -1,0 +1,255 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  lint-and-test:
+    name: Lint, Format Check & Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check code formatting
+        if: always()
+        run: npm run format:check
+
+      - name: Run Stylelint
+        if: always()
+        run: npm run stylelint
+
+      - name: Type check
+        if: always()
+        run: npm run typecheck
+
+      - name: Build project
+        if: always()
+        run: npm run build
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+
+  security-audit:
+    name: Security & Dependency Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Check for outdated packages
+        if: always()
+        run: |
+          echo "Checking for outdated packages..."
+          OUTDATED=$(npm outdated --json || true)
+          if [ "$OUTDATED" != "" ] && [ "$OUTDATED" != "null" ]; then
+            echo "Some dependencies are outdated. Run 'npm outdated' locally for details."
+          else
+            echo "Dependencies are up to date."
+          fi
+
+      - name: Generate audit report
+        if: always()
+        run: |
+          echo "## Security & Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "### Vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate --json 2>/dev/null | jq -r '.metadata.vulnerabilities | to_entries[] | "- \(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+
+  bundle-size:
+    name: Analyze Bundle Size
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_BASE_PATH: '/'
+        run: npm run analyze
+
+      - name: Analyze bundle size
+        if: always()
+        run: |
+          echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          TOTAL_SIZE=$(du -sb dist 2>/dev/null | awk '{print int($1/1024)}' || echo "0")
+
+          echo "### Bundle Sizes (KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- JavaScript: ${JS_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- CSS: ${CSS_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- Total: ${TOTAL_SIZE}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload bundle stats
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bundle-stats
+          path: dist/stats.html
+          retention-days: 7
+
+      - name: Check bundle size limits
+        if: always()
+        run: |
+          JS_LIMIT=512
+          CSS_LIMIT=50
+
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+
+          echo "JavaScript bundle size: ${JS_SIZE} KB (limit: ${JS_LIMIT} KB)"
+          echo "CSS bundle size: ${CSS_SIZE} KB (limit: ${CSS_LIMIT} KB)"
+
+          if [ "$JS_SIZE" -gt "$JS_LIMIT" ]; then
+            echo "::error::JavaScript bundle size (${JS_SIZE} KB) exceeds limit (${JS_LIMIT} KB)"
+            exit 1
+          fi
+
+          if [ "$CSS_SIZE" -gt "$CSS_LIMIT" ]; then
+            echo "::error::CSS bundle size (${CSS_SIZE} KB) exceeds limit (${CSS_LIMIT} KB)"
+            exit 1
+          fi
+
+          echo "✅ All bundles within size limits"
+
+  performance-budget:
+    name: Check Performance Budget
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_BASE_PATH: '/'
+        run: npm run build
+
+      - name: Check performance budget
+        if: always()
+        run: |
+          echo "## Performance Budget Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          JS_SIZE=$(find dist/assets -name "*.js" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          CSS_SIZE=$(find dist/assets -name "*.css" -type f -exec du -sb {} + 2>/dev/null | awk '{sum+=$1} END {print int(sum/1024)}' || echo "0")
+          BUNDLE_SIZE=$((JS_SIZE + CSS_SIZE))
+
+          JS_BUDGET=400
+          CSS_BUDGET=50
+          BUNDLE_BUDGET=500
+
+          echo "### Bundle Sizes" >> $GITHUB_STEP_SUMMARY
+          echo "- JavaScript: ${JS_SIZE} KB (budget: ${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- CSS: ${CSS_SIZE} KB (budget: ${CSS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "- Total (JS+CSS): ${BUNDLE_SIZE} KB (budget: ${BUNDLE_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          FAILED=0
+
+          if [ "$JS_SIZE" -gt "$JS_BUDGET" ]; then
+            echo "::error::JavaScript bundle (${JS_SIZE} KB) exceeds budget (${JS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$CSS_SIZE" -gt "$CSS_BUDGET" ]; then
+            echo "::error::CSS bundle (${CSS_SIZE} KB) exceeds budget (${CSS_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$BUNDLE_SIZE" -gt "$BUNDLE_BUDGET" ]; then
+            echo "::error::Total bundle size (${BUNDLE_SIZE} KB) exceeds budget (${BUNDLE_BUDGET} KB)" >> $GITHUB_STEP_SUMMARY
+            FAILED=1
+          fi
+
+          if [ "$FAILED" -eq 0 ]; then
+            echo "✅ All bundles within performance budget" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Performance budget exceeded. Please optimize your bundles." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi

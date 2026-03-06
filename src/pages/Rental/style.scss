@@ -1,0 +1,148 @@
+@use '../../styles/mixins' as *;
+
+.rental-page {
+  @include flex-column;
+
+  align-items: stretch;
+  justify-content: start;
+  min-width: 0;
+  width: 100%;
+}
+
+.rental-hero {
+  margin-bottom: $spacing-lg;
+  width: 100%;
+
+  @include tablet {
+    margin-bottom: $spacing-md;
+  }
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.rental-content {
+  @include flex-column;
+
+  align-items: start;
+  justify-content: start;
+  max-width: $content-max-width;
+  width: 100%;
+}
+
+.rental-title {
+  color: $color-primary;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  text-align: start;
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.rental-message {
+  color: $color-text;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 600px;
+  text-align: start;
+}
+
+.rental-location {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: $spacing-md;
+  text-align: start;
+
+  @include mobile {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.rental-main {
+  align-items: flex-start;
+  display: flex;
+  gap: $spacing-lg;
+  justify-content: space-between;
+  margin-bottom: $spacing-2xl;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: column;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+  }
+
+  @include mobile {
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.rental-left {
+  @include flex-column;
+
+  flex: 1;
+  gap: $spacing-sm;
+}
+
+.rental-right {
+  @include flex-column;
+
+  align-items: flex-end;
+  flex-shrink: 0;
+  gap: $spacing-md;
+  justify-content: flex-start;
+
+  @include tablet {
+    align-items: center;
+    background-color: $color-bg-light;
+    border-radius: $border-radius-xs;
+    flex-direction: row;
+    gap: $spacing-lg;
+    justify-content: space-between;
+    padding: $spacing-sm $spacing-md;
+    width: 100%;
+  }
+
+  @include mobile {
+    align-items: center;
+    background-color: $color-bg-light;
+    border-radius: $border-radius-xs;
+    flex-direction: row;
+    gap: $spacing-sm;
+    justify-content: space-between;
+    padding: $spacing-xs $spacing-sm;
+    width: 100%;
+  }
+}
+
+.rental-collapses {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-xl;
+  margin-top: $spacing-xl;
+  width: 100%;
+
+  > * {
+    flex: 1;
+  }
+
+  @include tablet {
+    align-items: stretch;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+  }
+
+  @include mobile {
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+  }
+}

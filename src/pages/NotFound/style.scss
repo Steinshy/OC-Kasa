@@ -1,0 +1,31 @@
+@use '../../styles/variables' as *;
+
+.not-found-page {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-title {
+  color: $color-primary;
+  display: flex;
+  font-size: clamp(3rem, 15vw, 100px);
+  font-weight: 700;
+}
+
+.error-message {
+  color: $color-primary;
+  display: flex;
+  font-size: clamp(1rem, 3vw, 24px);
+  font-weight: 500;
+}
+
+.error-link {
+  color: $color-primary;
+  font-size: clamp(0.875rem, 2.5vw, 18px);
+  font-weight: 500;
+  margin-top: 20px;
+  text-decoration: underline;
+}
