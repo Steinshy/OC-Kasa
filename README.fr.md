@@ -1,6 +1,6 @@
 # Kasa - Plateforme de location d'appartements
 
-**Langues:** [English](README.md) | [Français](README.fr.md)
+**Langues:** [Français](README.fr.md) | [English](README.md)
 
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white&style=flat-square)](https://www.typescriptlang.org/)
@@ -10,6 +10,8 @@
 [![Node](https://img.shields.io/badge/Node-18+-339933?logo=node.js&logoColor=white&style=flat-square)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-Steinshy%2FKasa-181717?logo=github&style=flat-square)](https://github.com/Steinshy/Kasa)
+
+![Kasa responsive mockup](public/mokeup/mokeup.png)
 
 Plateforme web moderne pour la location d'appartements entre particuliers. Découvrez des propriétés de qualité avec des descriptions détaillées, des galeries photo et toutes les informations nécessaires pour prendre une décision éclairée.
 

@@ -1,6 +1,6 @@
 # Kasa - Rental Listing Platform
 
-**Languages:** [English](README.md) | [Français](README.fr.md)
+**Languages:** [Français](README.fr.md) | [English](README.md)
 
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white&style=flat-square)](https://www.typescriptlang.org/)
@@ -10,6 +10,8 @@
 [![Node](https://img.shields.io/badge/Node-18+-339933?logo=node.js&logoColor=white&style=flat-square)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-Steinshy%2FKasa-181717?logo=github&style=flat-square)](https://github.com/Steinshy/Kasa)
+
+![Kasa responsive mockup](public/mokeup/mokeup.png)
 
 Modern web platform for peer-to-peer apartment rentals. Discover quality rental properties with detailed descriptions, photo galleries, and comprehensive information to make informed decisions.
 
