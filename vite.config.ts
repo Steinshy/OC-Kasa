@@ -219,7 +219,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     server: commonServerOptions,
     build: buildOptions,
     optimizeDeps: {
-      include: ['lucide-react', 'react', 'react-dom', 'react-router'],
+      include: ['react', 'react-dom'],
     },
     preview: {
       host: '0.0.0.0',

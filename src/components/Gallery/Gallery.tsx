@@ -1,4 +1,5 @@
 import useGalleryNavigation from '@/hooks/use-gallery-navigation';
+import { optimizeImageUrl } from '@/utils/kasa-api';
 import './style.scss';
 
 interface GalleryProps {
@@ -9,7 +10,7 @@ const Gallery = ({ pictures = [] }: GalleryProps) => {
   const total = pictures.length;
   const { currentIndex, goToPrevious, goToNext, handleKeyDown } =
     useGalleryNavigation(total);
-  const currentPicture = pictures[currentIndex];
+  const currentPicture = pictures[currentIndex] ?? '';
   const counterId = 'gallery-counter';
   if (total === 0) return null;
 
@@ -23,7 +24,7 @@ const Gallery = ({ pictures = [] }: GalleryProps) => {
       aria-describedby={total > 1 ? counterId : undefined}
     >
       <img
-        src={currentPicture}
+        src={optimizeImageUrl(currentPicture, 800)}
         alt={`Galerie photo ${currentIndex + 1} sur ${total}`}
         className="gallery-image"
       />

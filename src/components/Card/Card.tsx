@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import type { NormalizedRental } from '@/types/rental';
+import { optimizeImageUrl } from '@/utils/kasa-api';
 
 import './style.scss';
 
@@ -15,7 +16,7 @@ const Card = ({ rental }: CardProps) => {
     <Link to={`/rental/${id}`}>
       <div className="card">
         <img
-          src={cover}
+          src={optimizeImageUrl(cover, 300)}
           alt={title || 'Logement'}
           className="card-image"
           loading="lazy"
