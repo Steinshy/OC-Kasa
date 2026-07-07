@@ -95,7 +95,7 @@
   }
 
   &-logo {
-    background-image: url('../../../public/logo_full.svg');
+    background-image: url('/logo_full.svg');
     background-position: center left;
     background-repeat: no-repeat;
     background-size: contain;
@@ -226,7 +226,7 @@
   }
 
   &-logo {
-    background-image: url('../../../public/logo_full.svg');
+    background-image: url('/logo_full.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;

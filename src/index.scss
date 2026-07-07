@@ -130,29 +130,29 @@ button {
 }
 
 #toast-container {
-  position: fixed;
-  top: $spacing-lg;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+  left: 50%;
   max-width: 90vw;
   pointer-events: none;
+  position: fixed;
+  top: $spacing-lg;
+  transform: translateX(-50%);
+  z-index: 9999;
 }
 
 .toast {
-  padding: $spacing-md $spacing-lg;
+  animation: slideDown 0.3s ease-out forwards;
+  background-color: #333;
   border-radius: $border-radius-sm;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  color: white;
   font-size: 0.95em;
   font-weight: 500;
-  background-color: #333;
-  color: white;
-  pointer-events: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: slideDown 0.3s ease-out forwards;
   opacity: 0;
+  padding: $spacing-md $spacing-lg;
+  pointer-events: auto;
 
   &.toast-show {
     opacity: 1;

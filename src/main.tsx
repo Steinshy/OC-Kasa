@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- app entry point, never hot-refreshed */
 import { StrictMode, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -11,9 +12,9 @@ import { showToast } from '@/utils/toast';
 
 import './index.scss';
 
-export const Home = lazy(() => import('@/pages/Home'));
-export const About = lazy(() => import('@/pages/About'));
-export const Rental = lazy(() => import('@/pages/Rental'));
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
+const Rental = lazy(() => import('@/pages/Rental'));
 
 const router = createBrowserRouter(
   [
@@ -52,7 +53,7 @@ const router = createBrowserRouter(
           ),
         },
         {
-          path: '/rental/:id',
+          path: 'rental/:id',
           loader: async ({ params }) => {
             try {
               return await fetchRentalById(params.id as string);
