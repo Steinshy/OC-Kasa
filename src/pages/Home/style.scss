@@ -30,7 +30,7 @@
 }
 
 .home-hero {
-  @include hero-base('/assets/background_home.jpg');
+  @include hero-base('background_home');
   @include hero-overlay;
 
   h1 {

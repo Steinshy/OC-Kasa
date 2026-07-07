@@ -1,5 +1,4 @@
 import type { Host as HostType } from '@/types/rental';
-import { optimizeImageUrl } from '@/utils/kasa-api';
 
 import './style.scss';
 
@@ -14,7 +13,7 @@ const Host = ({ host }: HostProps) => {
   return (
     <div className="host" aria-label={`Hôte : ${name}`}>
       <p className="host-name">{name}</p>
-      {picture && <img className="host-picture" src={optimizeImageUrl(picture, 64)} alt={name} />}
+      {picture && <img className="host-picture" src={picture} alt={name} />}
     </div>
   );
 };

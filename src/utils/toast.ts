@@ -3,7 +3,8 @@ export type ToastType = 'error' | 'success' | 'info';
 const TOAST_DURATION = 3000;
 
 export const showToast = (message: string, type: ToastType = 'error') => {
-  const container = document.getElementById('toast-container') || createToastContainer();
+  const container =
+    document.getElementById('toast-container') || createToastContainer();
 
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;

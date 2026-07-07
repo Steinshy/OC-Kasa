@@ -97,11 +97,9 @@ export const buildRental = (rental: unknown): NormalizedRental => {
     locationTags,
     ratingValue,
     locationRatingMax,
-    pictures: pictures.length ? pictures : undefined,
     equipments: Array.isArray(rentalData.equipments)
       ? (rentalData.equipments as string[])
       : undefined,
-    rating: ensureString(rentalData.rating) || undefined,
   };
 };
 
@@ -139,9 +137,4 @@ export const fetchRentalById = async (
 
   if (!rental) throw new Error(`Rental with id ${id} not found`);
   return rental;
-};
-
-export const optimizeImageUrl = (url: string, width: number): string => {
-  // Append query params for width and quality optimization
-  return `${url}?w=${width}&q=90`;
 };

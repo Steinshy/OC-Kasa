@@ -3,10 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "react-router serve ./build/server/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,scss,md}\"",
@@ -16,16 +16,13 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "analyze": "vite build --mode analyze",
-    "lighthouse": "lhci autorun",
+    "lighthouse": "pnpm build && lhci autorun --collect.startServerCommand=\"pnpm preview\" --collect.startServerReadyPattern=Local",
     "clean": "rm -rf dist .lighthouseci",
     "update:check": "ncu",
     "update:interactive": "ncu -i",
     "update:all": "ncu -u"
   },
   "dependencies": {
-    "@react-router/node": "^7.13.1",
-    "@react-router/serve": "^7.13.1",
-    "isbot": "^5.1.35",
     "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -34,26 +31,20 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@lhci/cli": "^0.15.1",
-    "@react-router/dev": "^7.13.1",
-    "@types/eslint-plugin-security": "^3.0.1",
     "@types/node": "^25.3.5",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-html": "^8.1.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsdoc": "^62.7.1",
-    "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-security": "^3.0.1",
     "eslint-plugin-sonarjs": "^4.0.1",
     "eslint-plugin-unicorn": "^63.0.0",
     "globals": "17.4.0",
-    "html-validate": "^10.11.1",
     "npm-check-updates": "^19.6.3",
     "prettier": "^3.8.1",
     "rollup-plugin-visualizer": "^6.0.11",
@@ -62,7 +53,6 @@
     "stylelint-config-standard": "40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-order": "^7.0.1",
-    "ts-api-utils": "^2.4.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1",
@@ -70,11 +60,17 @@
     "vite-plugin-pwa": "^1.2.0",
     "vite-tsconfig-paths": "^6.1.1"
   },
-  "overrides": {
-    "glob": "^13.0.0",
-    "source-map": "^0.7.4",
-    "magic-string": "^0.30.0",
-    "serialize-javascript": "^7.0.3",
-    "tmp": "^0.2.5"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild"
+    ],
+    "overrides": {
+      "glob": "^13.0.0",
+      "source-map": "^0.7.4",
+      "magic-string": "^0.30.0",
+      "serialize-javascript": "^7.0.3",
+      "tmp": "^0.2.5"
+    }
   }
 }

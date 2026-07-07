@@ -53,7 +53,7 @@ Kasa/
 │   │   ├── Rating/           # Star rating
 │   │   └── Tags/             # Tag badges
 │   ├── helpers/              # Utility functions
-│   │   └── validator.tsx     # Data validation
+│   │   └── validator.ts     # Data validation
 │   ├── hooks/                # Custom React hooks
 │   ├── pages/                # Route pages
 │   │   ├── Home/            # Listings page
@@ -140,20 +140,20 @@ Kasa/
 ### Prerequisites
 
 - Node.js 18+
-- npm 9+ (or yarn/pnpm)
+- pnpm 10+ (`corepack enable` or `npm install -g pnpm`)
 
 ### Installation
 
 ```bash
 git clone https://github.com/Steinshy/Kasa.git
 cd Kasa
-npm install
+pnpm install
 ```
 
 ### Development
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Application runs on `http://localhost:5173` with hot module reloading.
@@ -161,48 +161,47 @@ Application runs on `http://localhost:5173` with hot module reloading.
 ### Production Build
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Production-optimized files are generated in `dist/` folder.
 
 ```bash
-npm run preview
+pnpm preview
 ```
 
 Preview the production build locally on port 3000.
 
 ### Available Commands
 
-| Command                 | Purpose                                          |
-| ----------------------- | ------------------------------------------------ |
-| `npm run dev`           | Start development server on port 5173            |
-| `npm run build`         | Create optimized production build                |
-| `npm run start`         | Serve production build (requires build first)    |
-| `npm run preview`       | Preview production build on port 3000            |
-| `npm run lint`          | Check code with ESLint                           |
-| `npm run lint:fix`      | Auto-fix ESLint violations                       |
-| `npm run format`        | Format code with Prettier                        |
-| `npm run format:check`  | Verify formatting without changes                |
-| `npm run stylelint`     | Lint CSS files                                   |
-| `npm run stylelint:fix` | Auto-fix CSS issues                              |
-| `npm run typecheck`     | Verify TypeScript types                          |
-| `npm run analyze`       | Bundle size analysis (generates dist/stats.html) |
-| `npm run lighthouse`    | Run Lighthouse CI audit                          |
-| `npm run clean`         | Remove dist/ and .lighthouseci/ folders          |
-| `npm run update:check`  | Check for outdated dependencies                  |
+| Command              | Purpose                                          |
+| -------------------- | ------------------------------------------------ |
+| `pnpm dev`           | Start development server on port 5173            |
+| `pnpm build`         | Create optimized production build                |
+| `pnpm preview`       | Preview production build on port 3000            |
+| `pnpm lint`          | Check code with ESLint                           |
+| `pnpm lint:fix`      | Auto-fix ESLint violations                       |
+| `pnpm format`        | Format code with Prettier                        |
+| `pnpm format:check`  | Verify formatting without changes                |
+| `pnpm stylelint`     | Lint CSS files                                   |
+| `pnpm stylelint:fix` | Auto-fix CSS issues                              |
+| `pnpm typecheck`     | Verify TypeScript types                          |
+| `pnpm analyze`       | Bundle size analysis (generates dist/stats.html) |
+| `pnpm lighthouse`    | Run Lighthouse CI audit                          |
+| `pnpm clean`         | Remove dist/ and .lighthouseci/ folders          |
+| `pnpm update:check`  | Check for outdated dependencies                  |
 
 ## Code Quality
 
 The project enforces code quality through multiple tools:
 
-| Tool           | Purpose                       | Command              |
-| -------------- | ----------------------------- | -------------------- |
-| **ESLint**     | JavaScript/TypeScript linting | `npm run lint`       |
-| **Prettier**   | Code formatting               | `npm run format`     |
-| **Stylelint**  | CSS linting                   | `npm run stylelint`  |
-| **TypeScript** | Type safety                   | `npm run typecheck`  |
-| **Lighthouse** | Performance audits            | `npm run lighthouse` |
+| Tool           | Purpose                       | Command           |
+| -------------- | ----------------------------- | ----------------- |
+| **ESLint**     | JavaScript/TypeScript linting | `pnpm lint`       |
+| **Prettier**   | Code formatting               | `pnpm format`     |
+| **Stylelint**  | CSS linting                   | `pnpm stylelint`  |
+| **TypeScript** | Type safety                   | `pnpm typecheck`  |
+| **Lighthouse** | Performance audits            | `pnpm lighthouse` |
 
 Strict configuration ensures consistent, maintainable code across the project.
 

@@ -1,6 +1,6 @@
 {
   "upgrade": true,
   "target": "minor",
-  "doctorTest": "npm run build",
+  "doctorTest": "pnpm run build",
   "reject": ["eslint"]
 }

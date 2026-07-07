@@ -22,7 +22,9 @@ const useGalleryNavigation = (total: number): UseGalleryNavigationReturn => {
   const reset = () => setCurrentIndex(0);
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (total === 0) return;
+    // Ignore keys pressed on inner controls (e.g. prev/next buttons),
+    // otherwise preventDefault() swallows their click activation
+    if (total === 0 || e.target !== e.currentTarget) return;
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault();

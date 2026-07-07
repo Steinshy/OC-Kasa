@@ -63,25 +63,16 @@
 }
 
 // ─── Hero base ────────────────────────────────
-@mixin hero-base($bg-image) {
-  $webp-image: str-replace($bg-image, '.jpg', '.webp');
+// $name: image basename in public/assets (jpg + webp variants must exist)
+@mixin hero-base($name) {
+  $jpg: '/assets/#{$name}.jpg';
+  $webp: '/assets/#{$name}.webp';
 
-  background-image: url($bg-image);
-
-  background-image:
-    -webkit-image-set(
-      url($webp-image) type('image/webp'),
-      url($bg-image) type('image/jpeg')
-    );
-
-  @supports (background-image: image-set(url('test.webp') type('image/webp'))) {
-    background-image:
-      image-set(
-        url($webp-image) type('image/webp'),
-        url($bg-image) type('image/jpeg')
-      );
-  }
-
+  background-image: url($jpg);
+  background-image: image-set(
+    url($webp) type('image/webp'),
+    url($jpg) type('image/jpeg')
+  );
   background-position: center;
   background-size: cover;
   border-radius: $border-radius-lg;

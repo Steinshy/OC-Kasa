@@ -21,7 +21,7 @@
 }
 
 .about-hero {
-  @include hero-base('/assets/background_about.jpg');
+  @include hero-base('background_about');
   @include hero-overlay;
 
   h1 {
