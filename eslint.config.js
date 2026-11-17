@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
+import eslintReact from '@eslint-react/eslint-plugin';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -116,9 +116,19 @@ export default [
     },
   },
   {
+    ...eslintReact.configs['strict-type-checked'],
+    files: ['src/**/*.{jsx,tsx}'],
+    languageOptions: {
+      ...eslintReact.configs['strict-type-checked'].languageOptions,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
     files: ['**/*.{jsx,tsx}'],
     plugins: {
-      'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       import: importPlugin,
       security: securityPlugin,
@@ -140,7 +150,10 @@ export default [
       },
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
+      '@eslint-react/purity': 'error',
+      '@eslint-react/immutability': 'error',
+      '@eslint-react/refs': 'error',
+      '@eslint-react/set-state-in-effect': 'error',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

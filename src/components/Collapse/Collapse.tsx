@@ -19,7 +19,7 @@ const Collapse = ({
   items,
   defaultOpen = false,
 }: CollapseProps) => {
-  const uid = useId();
+  const id = useId();
   const { isOpen, toggleOpen, handleKeyDown } =
     useCollapseNavigation(defaultOpen);
 
@@ -28,11 +28,11 @@ const Collapse = ({
 
   if (!title || (!hasContent && !hasItems)) return null;
 
-  const bodyId = `collapse-body-${uid}`;
+  const bodyId = `collapse-body-${id}`;
   const renderedContent = hasItems ? (
     <ul className="collapse-list">
-      {items.map((item, index) => (
-        <li key={index}>{item}</li>
+      {items.map((item) => (
+        <li key={item}>{item}</li>
       ))}
     </ul>
   ) : (

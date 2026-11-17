@@ -2,11 +2,13 @@ import useGalleryNavigation from '@/hooks/use-gallery-navigation';
 
 import './style.scss';
 
+const NO_PICTURES: string[] = [];
+
 interface GalleryProps {
   pictures?: string[];
 }
 
-const Gallery = ({ pictures = [] }: GalleryProps) => {
+const Gallery = ({ pictures = NO_PICTURES }: GalleryProps) => {
   const total = pictures.length;
   const { currentIndex, goToPrevious, goToNext, handleKeyDown } =
     useGalleryNavigation(total);
